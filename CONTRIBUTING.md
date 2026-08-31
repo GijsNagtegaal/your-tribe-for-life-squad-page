@@ -25,14 +25,14 @@ Commit messages worden opgebouwd volgens:
 [type]: [change] [issue number]
 
 Commit types
-docs: — Changes to documentation, e.g. README.md, Handover.md, Figma files or design rationale in the Wiki.
-feat: — Implementing a new feature.
-fix: — Fixing a bug, style or layout issue.
-perf: — A code change that improves performance.
-refactor: — A code change that neither fixes a bug nor adds a feature, but improves structure or readability.
-style: — Changes that affect readability but not the functionality of the code, such as source formatting, tabs or newlines.
-test: — Adding missing or correcting existing tests.
-Pull Requests
+- docs: — Changes to documentation, e.g. README.md, Handover.md, Figma files or design rationale in the Wiki.
+- feat: — Implementing a new feature.
+- fix: — Fixing a bug, style or layout issue.
+- perf: — A code change that improves performance.
+- refactor: — A code change that neither fixes a bug nor adds a feature, but improves structure or readability.
+- style: — Changes that affect readability but not the functionality of the code, such as source formatting, tabs or newlines.
+- test: — Adding missing or correcting existing tests.
+- Pull Requests
 
 Een Pull Request (PR) wordt aangemaakt wanneer een volledig component klaar en getest is.
 
