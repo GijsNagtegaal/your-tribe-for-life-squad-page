@@ -18,14 +18,11 @@
     src: url(/Baloo2-Extrabold.ttf);
 }
 
-html {
+html{
     color-scheme: light dark;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    list-style: none;
 }
 
 body {
