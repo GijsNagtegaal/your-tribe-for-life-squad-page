@@ -1,0 +1,41 @@
+@font-face {
+    font-family: Regular;
+    src: url(/Baloo2-Regular.ttf);
+}
+
+@font-face {
+    font-family: Medium;
+    src: url(/Baloo2-Medium.ttf);
+}
+
+@font-face {
+    font-family: Bold;
+    src: url(/Baloo2-Bold.ttf);
+}
+
+@font-face {
+    font-family: Extrabold;
+    src: url(/Baloo2-Extrabold.ttf);
+}
+
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    margin: 0;
+    --text: light-dark(#121212,#f1f1f1);
+    --background: light-dark(#f1f1f1,#121212 );
+
+    background: var(--background);
+}
+
+h1, h2, h3 {
+    font-family: Bold;
+}
+
+p, a {
+    color: var(--text);
+    font-family: Medium;
+    text-decoration: none;
+}
