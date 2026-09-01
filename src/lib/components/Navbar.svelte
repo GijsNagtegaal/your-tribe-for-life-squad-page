@@ -23,10 +23,10 @@
 
     nav {
         display: flex;
-        width: 100%;
+        width: 100vw;
+        align-items: center;
         justify-content: space-around;
         background: var(--background);
-        padding: 0.5rem 1rem;
         position: fixed;
         bottom: 0;
         left: 0;

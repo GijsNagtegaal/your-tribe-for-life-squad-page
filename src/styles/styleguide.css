@@ -35,7 +35,7 @@ h1, h2, h3 {
 }
 
 p, a {
-    color: black;
+    color: var(--text);
     font-family: Medium;
     text-decoration: none;
 }
