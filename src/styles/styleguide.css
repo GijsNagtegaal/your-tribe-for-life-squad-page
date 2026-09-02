@@ -27,7 +27,13 @@ body {
     --text: light-dark(#121212,#f1f1f1);
     --background: light-dark(#f1f1f1,#121212 );
 
+    --gap-small: 0.25rem;
+
     background: var(--background);
+}
+
+main {
+    margin: 1rem;
 }
 
 h1, h2, h3 {
