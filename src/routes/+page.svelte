@@ -1,4 +1,9 @@
 <script>
+
+    let {data} = $props();
+
+    const persons = data.persons;
+
     import Navbar from "$lib/components/Navbar.svelte";
     import Player from "$lib/components/Player.svelte";
     import Prevpage from "$lib/components/Prevpage.svelte";
