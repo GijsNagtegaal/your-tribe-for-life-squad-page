@@ -6,3 +6,13 @@
     <Prevpage url="/terug" text="terug" />
     <Navbar />
 </main>
+    import Heading from "$lib/components/Heading.svelte";
+</script>
+
+<Navbar />
+
+<Heading level={4} text="Groups" />
+
+<style>
+    
+</style>

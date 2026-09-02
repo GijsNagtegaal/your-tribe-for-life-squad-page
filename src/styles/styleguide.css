@@ -38,6 +38,12 @@ main {
 
 h1, h2, h3 {
     font-family: Bold;
+    font-size: 2rem;
+}
+
+h4, h5, h6 {
+    font-family: Bold;
+    font-size: 1.6rem;
 }
 
 p, a {
