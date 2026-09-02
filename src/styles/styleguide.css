@@ -18,27 +18,27 @@
     src: url(/Baloo2-Extrabold.ttf);
 }
 
-:root {
+html{
     color-scheme: light dark;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    --text: light-dark(#121212,#f1f1f1);
-    --background: light-dark(#f1f1f1,#121212 );
 
-    --gap-small: 0.25rem;
+    --text: light-dark(#121212,#f1f1f1);
+    --inverted-text: light-dark(#f1f1f1,#121212);
+    --background: light-dark(#f1f1f1,#121212 );
+    --transparent: light-dark(#f1f1f1bb,#121212c4 );
+    --green: #1ED760;
+    --border-small: 0.625rem;
 
     background: var(--background);
 }
 
-main {
-    margin: 1rem;
-}
-
 h1, h2, h3 {
     font-family: Bold;
-    font-size: 2rem;
 }
 
 h4, h5, h6 {
