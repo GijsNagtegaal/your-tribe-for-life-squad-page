@@ -25,7 +25,10 @@
 body {
     margin: 0;
     --text: light-dark(#121212,#f1f1f1);
+    --text-inverted: light-dark(#f1f1f1,#121212 );
     --background: light-dark(#f1f1f1,#121212 );
+    --green: #1ED760;
+    --border-round: 100%;
 
     background: var(--background);
 }
