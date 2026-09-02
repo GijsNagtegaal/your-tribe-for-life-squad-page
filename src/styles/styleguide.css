@@ -28,10 +28,11 @@ html{
 body {
 
     --text: light-dark(#121212,#f1f1f1);
-    --inverted-text: light-dark(#f1f1f1,#121212);
+    --text-inverted: light-dark(#f1f1f1,#121212 );
     --background: light-dark(#f1f1f1,#121212 );
-    --transparent: light-dark(#f1f1f1bb,#121212c4 );
     --green: #1ED760;
+    --border-round: 100%;
+    --transparent: light-dark(#f1f1f1bb,#121212c4 );
     --border-small: 0.625rem;
 
     background: var(--background);
