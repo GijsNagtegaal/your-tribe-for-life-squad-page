@@ -8,7 +8,11 @@
     let { data } = $props();
     const persons = data.persons;
 </script>
+
 <main>
+    {#each persons as persons}
+        <p>{persons.name}</p>
+    {/each}
     <Prevpage url="/terug" text="terug" />
     <Navbar />
     <Heading level={4} text="Groups" />
