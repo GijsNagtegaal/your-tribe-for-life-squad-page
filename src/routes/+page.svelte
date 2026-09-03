@@ -22,6 +22,7 @@
     <Heading level={4} text="Groups" />
     <GroupView {persons} />
     <GroupView />
+    <YearCards />
 </main>
 
 <Player />
