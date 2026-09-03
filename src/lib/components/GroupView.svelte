@@ -1,5 +1,5 @@
 <script>
-     let { persons = [] } = $props();
+    let { persons = [] } = $props();
 </script>
 
 <section>

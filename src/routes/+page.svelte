@@ -15,12 +15,13 @@
     {#each persons as persons}
         <p>{persons.name}</p>
     {/each}
+    <Dropdown />
     <Prevpage url="/terug" text="terug" />
     <Navbar />
     <Heading level={4} text="Groups" />
     <GroupView {persons} />
     <GroupView />
-    <Dropdown />
+    
 </main>
 
 <Player />
