@@ -29,7 +29,7 @@
         height: 3.5rem;
         border: none;
         border-radius: var(--border-round);
-        background: var(--green);
+        background: var(--primary-accent);
         cursor: pointer;
         padding: 0;
     }

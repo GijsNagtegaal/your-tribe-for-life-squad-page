@@ -1,8 +1,5 @@
 <script>
-    let favColor = "#D7961E";
-    let favColor1 = "#1ED760";
-    let favColor2 = "#f1f1f1";
-    let favColor3 = "#1EB2D7";
+     let { persons = [] } = $props();
 </script>
 
 <section>
@@ -11,27 +8,13 @@
         <figure>
             <img src="https://infinigeek.com/assets/keeping-your-laptop-from-overheating-tech-repair-diy-tips.png" alt="">
             <figcaption>
-                <h3>The blowdryers</h3> 
+                <p>The blowdryers</p> 
             </figcaption>
         </figure>
         <ul>
-            <li><p style="--favcolor: {favColor};">Gijs</p></li>
-            <li><p style="--favcolor: {favColor1};">Thomas</p></li>
-            <li><p style="--favcolor: {favColor2};">Roxy</p></li>
-        </ul>
-    </article>
-
-    <article>
-        <figure>
-            <img src="https://infinigeek.com/assets/keeping-your-laptop-from-overheating-tech-repair-diy-tips.png" alt="">
-            <figcaption>
-                <h3>The blowdryers</h3> 
-            </figcaption>
-        </figure>
-        <ul>
-            <li><p style="--favcolor: {favColor1};">Gijs</p></li>
-            <li><p style="--favcolor: {favColor3};">Thomas</p></li>
-            <li><p style="--favcolor: {favColor};">Roxy</p></li>
+            {#each persons as persons}
+                <p style="--favcolor: {persons.fav_color};">{persons.name}</p>
+            {/each}
         </ul>
     </article>
 </section>
@@ -70,7 +53,7 @@
             left: 0;
             bottom: 0;
 
-            h3 {
+            p {
                 display: flex;
                 margin: .5rem 0;
                 color: var(---text);
@@ -91,11 +74,16 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            background: var(--favcolor);
+            background-color: var(--primary-accent);
+            color: var(--text-inverted);
             border-radius: var(--border-small);
-            color: var(--inverted-text);
             font-weight: bold;
             padding: 0rem 0.5rem;
+
+            @supports (color: contrast-color(red)) {
+                background: var(--favcolor);
+                color: contrast-color(var(--favcolor));
+            }
         }
     }
     
