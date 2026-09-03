@@ -1,2 +1,58 @@
+@font-face {
+    font-family: Regular;
+    src: url(/Baloo2-Regular.ttf);
+}
+
+@font-face {
+    font-family: Medium;
+    src: url(/Baloo2-Medium.ttf);
+}
+
+@font-face {
+    font-family: Bold;
+    src: url(/Baloo2-Bold.ttf);
+}
+
+@font-face {
+    font-family: Extrabold;
+    src: url(/Baloo2-Extrabold.ttf);
+}
+
+html {
+    color-scheme: light dark;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    list-style: none;
+}
+
 body {
+
+    --text: light-dark(#121212,#f1f1f1);
+    --text-inverted: light-dark(#f1f1f1,#121212 );
+    --background: light-dark(#f1f1f1,#121212 );
+    --primary-accent: #1ED760;
+    --secondary-accent: #4f1ed7;
+    --border-round: 100%;
+    --transparent: light-dark(#f1f1f1bb,#121212c4 );
+    --border-small: 0.625rem;
+
+    background: var(--background);
+}
+
+h1, h2, h3 {
+    font-family: medium;
+}
+
+h4, h5, h6, summary {
+    font-family: medium;
+    font-size: 1.6rem;
+}
+
+p, a {
+    color: var(--text);
+    font-family: Medium;
+    text-decoration: none;
 }
