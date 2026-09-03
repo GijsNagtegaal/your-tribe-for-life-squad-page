@@ -5,6 +5,7 @@
     import Heading from "$lib/components/Heading.svelte";
     import GroupView from "$lib/components/GroupView.svelte";
     import Dropdown from "$lib/components/Dropdown.svelte";
+    import TeacherCarrousel from "$lib/components/TeachersCaroussel.svelte";
     
     let { data } = $props();
     const persons = data.persons;
@@ -12,6 +13,9 @@
 </script>
 
 <main>
+    <Heading level={4} text="Docenten" />
+    <TeacherCarrousel {persons} />
+
     {#each persons as persons}
         <p>{persons.name}</p>
     {/each}
