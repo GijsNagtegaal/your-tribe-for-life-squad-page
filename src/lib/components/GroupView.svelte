@@ -1,22 +1,51 @@
 <script>
     let { persons = [] } = $props();
+
+    // Group everyone by semester13 group
+    let groupedByTeam = $derived(
+        persons
+            .filter(person => person.team_s13)
+            .reduce((acc, person) => {
+                const teamName = person.team_s13; 
+                
+                if (!acc[teamName]) {
+                    acc[teamName] = [];
+                }
+                
+                acc[teamName].push(person);
+                return acc;
+            }, {})
+    );
+
+    // Put it into an array
+    let groupArray = $derived(
+        Object.entries(groupedByTeam).map(([team, members]) => ({
+            team,
+            members
+        }))
+    );
 </script>
 
 <section>
-    <!-- This will be replaced with a for loop -->
-    <article>
-        <figure>
-            <img src="https://infinigeek.com/assets/keeping-your-laptop-from-overheating-tech-repair-diy-tips.png" alt="">
-            <figcaption>
-                <p>The blowdryers</p> 
-            </figcaption>
-        </figure>
-        <ul>
-            {#each persons as persons}
-                <p style="--favcolor: {persons.fav_color};">{persons.name}</p>
-            {/each}
-        </ul>
-    </article>
+    {#each groupArray as { team, members}}
+        <article>
+            <figure>
+                <img src="https://infinigeek.com/assets/keeping-your-laptop-from-overheating-tech-repair-diy-tips.png" alt="">
+                <figcaption>
+                    <p>{team} {members.length}</p> 
+                </figcaption>
+            </figure>
+            <ul>
+                {#each members as person}
+                    <li>
+                        <a href="/studenten/{person.slug}" style="--favcolor: {person.fav_color};">
+                            {person.name}
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+        </article>
+    {/each}
 </section>
 
 <style>
@@ -70,7 +99,7 @@
         line-break: normal;
         gap: 0.5rem;
 
-        p {
+        a {
             margin: 0;
             display: flex;
             justify-content: center;
