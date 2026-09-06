@@ -20,11 +20,11 @@
   <article>
     <a href="/playlist/jaar1">
       <img src={jaar1} alt="Jaar 1" />
-      <span>Open</span>
+      <span>Jaar 1</span>
     </a>
     <h2>Jaar 1</h2>
     <p>
-      36 Leden<br />
+      42 Leden<br />
       2025–2026
     </p>
   </article>
@@ -32,12 +32,12 @@
   <article>
     <a href="/playlist/jaar2">
       <img src={jaar2} alt="Jaar 2" />
-      <span>Open</span>
+      <span>Jaar 2</span>
     </a>
     <h2>Jaar 2</h2>
     <p>
       36 Leden<br />
-      2025–2026
+      2026–2027
     </p>
   </article>
 </section>
@@ -50,30 +50,37 @@
     gap: 1.5rem;
   }
 
-  h2 {
-    margin: 0 0 12px;
-    display: block;
-    font-weight: var(--font-weight-medium);
-
-    transition: display 0s linear 0.35s;
-    transition-behavior: allow-discrete;
-  }
-
   article {
     position: relative;
-    display: inline-block;
+    display: grid;
+    grid-template-rows: auto auto;
     vertical-align: top;
     max-width: 300px;
 
+    h2,
     p {
-      margin: 8px 0 0;
+      grid-area: 2 / 1;
+      margin: 0 0 12px;
+    }
+
+    h2 {
+      display: block;
+      font-weight: var(--font-weight-medium);
+      opacity: 1;
+
+      transition: opacity 0.35s ease;
+    }
+    p {
+      margin: 0;
       display: block;
       color: #aaa;
       line-height: 1.2;
       transform: translateY(-15px);
       opacity: 0;
 
-      transition: transform 0.35s ease, opacity 0.35s ease;
+      transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
     }
 
     a {
@@ -123,8 +130,7 @@
   }
 
   article:hover h2 {
-    display: none;
-    transition: display 0s linear;
+    opacity: 0;
   }
 
   article:hover p {
