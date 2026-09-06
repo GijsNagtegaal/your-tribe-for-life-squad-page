@@ -1,20 +1,7 @@
 <script>
   import jaar1 from "$lib/assets/jaar1.jpg";
   import jaar2 from "$lib/assets/jaar2.jpg";
-
-  let { persons = [] } = $props();
-  // const persons = data.persons;
 </script>
-
-<section>
-  {#each persons as persons}
-    <article>
-      <ul>
-        <li><p>{persons.name}</p></li>
-      </ul>
-    </article>
-  {/each}
-</section>
 
 <section>
   <article>
