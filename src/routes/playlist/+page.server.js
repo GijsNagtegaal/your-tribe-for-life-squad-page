@@ -1,29 +1,18 @@
-import { getSpotifyData } from '$lib/spotify.server.js';
-
 export async function load() {
-	const res = await fetch(
-		"https://fdnd.directus.app/items/person?fields=*&filter[squads][squad_id][cohort][_eq]=2627"
-	);
+	const res = await fetch('https://api.gijsnagtegaal.nl/items/school');
 	const data = await res.json();
 
-	const persons = await Promise.all(
-		data.data
-			.filter(person => person.fav_spotify_track)
-			.map(async (person) => {
-				const slug = person.name
-					? person.name.toLowerCase().replaceAll(' ', '-')
-					: 'unknown';
+	const persons = Array.isArray(data) ? data : data.data || [data];
 
-				const spotifyData = await getSpotifyData(person.fav_spotify_track);
-
-				return {
-					...person,
-					slug,
-					spotifyData,
-					audioUrl: `src/lib/assets/${person.name?.trim().replaceAll(' ', '-') || 'unknown'}.mp3`
-				};
-			})
-	);
-
-	return { persons };
+	return {
+		persons: persons.map((person) => ({
+			...person,
+			slug: person.name?.toLowerCase().replaceAll(' ', '-') || 'unknown',
+			audioUrl: `https://api.gijsnagtegaal.nl/assets/${person.audio_file}`,
+			spotifyData: {
+				name: person.song_name,
+				artist: person.artist_name
+			}
+		}))
+	};
 }
