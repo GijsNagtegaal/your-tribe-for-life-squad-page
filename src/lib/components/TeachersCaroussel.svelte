@@ -1,19 +1,16 @@
 <script>
-    let { persons } = $props();
-    import mugshotUnknown from '$lib/assets/mugshot-unknown.png';
+    let { teachers } = $props();
     import PersonSquare from './PersonSquare.svelte';
-
-
 </script>
 
 <section class="teacher-carrousel">
     <ul>
-        {#each persons as person}
+        {#each teachers as teacher}
             <li>
-                <a href="/docenten/{person.slug}">
+                <a href="/docenten/{teacher.slug}">
                     <figure>
-                        <PersonSquare {person} />
-                        <figcaption>{person.name}</figcaption>
+                        <PersonSquare person={teacher} />
+                        <figcaption>{teacher.name}</figcaption>
                     </figure>
                 </a>
             </li>
@@ -46,8 +43,5 @@
             background-color: var(--background);
             padding: var(--spacing-xs) 0;
         }
-
     }
-    
-
 </style>

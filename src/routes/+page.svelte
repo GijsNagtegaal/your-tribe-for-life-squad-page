@@ -10,17 +10,19 @@
 
     let { data } = $props();
     const persons = data.persons;
+    const teachers = data.teachers;
     
 </script>
 
 <main>
     <Heading level={4} text="Docenten" />
-    <TeacherCarrousel {persons} />
+
+    <TeacherCarrousel {teachers} />
 
     {#each persons as person}
         <p>{person.name}</p>
     {/each}
-    
+
     <Dropdown />
     <Prevpage url="/terug" text="terug" />
     <Navbar />
