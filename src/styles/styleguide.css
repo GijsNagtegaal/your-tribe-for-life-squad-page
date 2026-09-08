@@ -51,7 +51,7 @@ body {
     --palette-secondary-300:   #6940DD;
 
     /* Neutral */
-    --palette-neutral-900:     #121212;
+    --palette-neutral-900:     #101010;
     --palette-neutral-850:     #2A2A2A;
     --palette-neutral-800:     #434343;
     --palette-neutral-700:     #535353;
@@ -79,9 +79,9 @@ body {
     --color-neutral-lighter:   var(--palette-neutral-500);  
     --color-neutral-lightest:  var(--palette-neutral-400);  
     
-    --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-light));
-    --text-inverted: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
-    --background: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
+    --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-lightest));
+    --text-inverted: light-dark(var(--color-neutral-lightest),var(--color-neutral-darkest) );
+    --background: light-dark(var(--color-neutral-lightest),var(--color-neutral-darkest) );
 
     /* Padding / Spacing ============================================*/
     --spacing-xs:              0.25rem;    
