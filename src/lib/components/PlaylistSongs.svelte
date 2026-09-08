@@ -1,49 +1,77 @@
 <script>
-	let { persons } = $props();
+    import PlayIcon from "./icons/PlayIcon.svelte";
+    import PauseIcon from "./icons/PauseIcon.svelte";
+    import PlayingIcon from "./icons/PlayingIcon.svelte";
 
-    let currentPlayingIndex = $state(null);
-
+    let { persons } = $props();
     let audioElements = [];
+    
+    // Make hoveredIndex reactive!
+    let hoveredIndex = $state(null); 
+    
+    let currentTrackIndex = $state(null);
+    let isPlaying = $state(false);
 
-    // this makes sure there can only be one song be playing at a time
+    let currentPerson = $derived(
+        currentTrackIndex !== null ? persons[currentTrackIndex] : null
+    );
+
     function toggleAudio(index) {
         const selectedAudio = audioElements[index];
 
-        // If another song is already playing, pause it
-        if (currentPlayingIndex !== null && currentPlayingIndex !== index) {
-            audioElements[currentPlayingIndex].pause();
+        if (currentTrackIndex !== null && currentTrackIndex !== index) {
+            audioElements[currentTrackIndex].pause();
         }
 
-        // play/pause for the clicked button
+        currentTrackIndex = index;
+
         if (selectedAudio.paused) {
             selectedAudio.play();
-            currentPlayingIndex = index;
+            isPlaying = true;
         } else {
             selectedAudio.pause();
-            currentPlayingIndex = null;
+            isPlaying = false;
         }
     }
 </script>
 
 <section>
-    <!-- https://svelte.dev/docs/svelte/each -->
     {#each persons as person, index (person.id)}
-        <!-- make sure the correct song is played linked to the index number and add a class playing to the button for styles to toggle -->
-        <button class={currentPlayingIndex === index ? 'playing' : ''} onclick={() => toggleAudio(index)}>
-            <p>
-                {#if currentPlayingIndex === index}
-                    ⏸ 
-                {:else}
-                    {index + 1} 
-                {/if}
-            </p>
+        <button 
+            class={currentTrackIndex === index ? 'playing' : ''} 
+            onclick={() => toggleAudio(index)}
+            onmouseenter={() => hoveredIndex = index} 
+            onmouseleave={() => hoveredIndex = null}
+        >
+        <p>
+            {#if currentTrackIndex === index && isPlaying && hoveredIndex === index}
+                <!-- playing and being hovered -->
+                <PauseIcon />
+            {:else if currentTrackIndex === index && isPlaying}
+                <!-- playing not hovered -->
+                <PlayingIcon />
+            {:else if hoveredIndex === index || currentTrackIndex === index}
+                <!-- hovered or it's the current track that is paused -->
+                <PlayIcon />
+            {:else}
+                <!-- Default, neither playing, not paused-current, not hovered -->
+                {index + 1}
+            {/if}
+        </p>
+            
             {#if person.spotifyData}
                 <h3>{person.spotifyData.name}</h3>
                 <p>{person.spotifyData.artist}</p>
             {/if}
-            <!-- make sure the correct song is played when clicked  -->
-            <audio bind:this={audioElements[index]} src={person.audioUrl}></audio>
             
+            <audio 
+                bind:this={audioElements[index]} 
+                src={person.audioUrl}
+                onended={() => {
+                    isPlaying = false;
+                    currentTrackIndex = null;
+                }}>
+            </audio>
             <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
         </button>
     {/each}
