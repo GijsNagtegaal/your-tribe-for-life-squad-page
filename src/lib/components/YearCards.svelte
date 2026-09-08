@@ -55,7 +55,7 @@
       font-weight: var(--font-weight-medium);
       opacity: 1;
 
-      transition: opacity 0.35s ease;
+      transition: opacity 0.25s ease;
     }
     p {
       margin: 0;
@@ -95,7 +95,7 @@
         font-size: var(--font-size-body-xs);
         font-weight: bold;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.35s ease;
       }
     }
   }
