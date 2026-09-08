@@ -32,13 +32,13 @@
             <figure>
                 <img src="https://infinigeek.com/assets/keeping-your-laptop-from-overheating-tech-repair-diy-tips.png" alt="">
                 <figcaption>
-                    <p>{team} {members.length}</p> 
+                    <p>{team}</p> 
                 </figcaption>
             </figure>
             <ul>
                 {#each members as person}
                     <li>
-                        <a href="/studenten/{person.slug}" style="--favcolor: {person.fav_color};">
+                        <a href="/studenten/{person.slug}" style="--favcolor: {person.fav_color}; --border-radius: {person.fav_border_radius}px;">
                             {person.name}
                         </a>
                     </li>
@@ -84,7 +84,10 @@
 
             p {
                 display: flex;
+                font-family: var(--font-size-h3);
+                font-weight: var(--font-weight-bold);
                 margin: .5rem 0;
+                margin-left: 0.25rem;
                 color: var(---text);
             }
         }
@@ -105,7 +108,7 @@
             justify-content: center;
             background-color: var(--primary-accent);
             color: var(--text-inverted);
-            border-radius: var(--border-small);
+            border-radius: var(--border-radius);
             font-weight: bold;
             padding: 0rem 0.5rem;
 
