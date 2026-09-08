@@ -1,6 +1,14 @@
 <script>
     import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
+    
     let { persons } = $props();
+
+    let searchTerm = $state('');
+    let results = $derived(
+        persons.filter(person => 
+            person.name.toLowerCase().includes(searchTerm.toLowerCase())    
+        )
+    );
 </script>
 
 <header>
@@ -9,11 +17,22 @@
         <form>
             <label for="">
                 <SearchIcon size="2rem" />
-                <input type="search" placeholder="Wie wil je opzoeken?">
+                <input type="text" bind:value={searchTerm} placeholder="Wie wil je opzoeken?">
             </label>
         </form>
     </search>
 </header>
+
+<h3>Resultaten voor "{searchTerm}"</h3>
+<ul>
+    {#each results as person}
+        <li>
+            <a href="/"> <!--Dit moet anders !-->
+                <p>{person.name}</p>
+            </a>
+        </li>
+    {/each}
+</ul>
 
 <style>
     form{

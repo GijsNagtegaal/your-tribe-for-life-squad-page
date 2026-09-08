@@ -6,6 +6,7 @@
 
 <SearchBar persons={data.persons} />
 
+
 <style>
 
 </style>
