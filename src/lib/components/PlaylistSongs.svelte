@@ -43,25 +43,31 @@
             onmouseenter={() => hoveredIndex = index} 
             onmouseleave={() => hoveredIndex = null}
         >
-        <p>
-            {#if currentTrackIndex === index && isPlaying && hoveredIndex === index}
-                <!-- playing and being hovered -->
-                <PauseIcon />
-            {:else if currentTrackIndex === index && isPlaying}
-                <!-- playing not hovered -->
-                <PlayingIcon />
-            {:else if hoveredIndex === index || currentTrackIndex === index}
-                <!-- hovered or it's the current track that is paused -->
-                <PlayIcon />
-            {:else}
-                <!-- Default, neither playing, not paused-current, not hovered -->
-                {index + 1}
-            {/if}
-        </p>
+            <p class="status-icon">
+                <!-- Pause: playing and hovered -->
+                <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
+                    <PauseIcon />
+                </span>
+                
+                <!-- Playing: playing but not hovered -->
+                <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
+                    <PlayingIcon />
+                </span>
+                
+                <!-- Play: hovered OR it's the current track that is paused -->
+                <span class="icon" class:active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
+                    <PlayIcon />
+                </span>
+                
+                <!-- Default Number: not playing, not paused-current, not hovered -->
+                <span class="icon" class:active={currentTrackIndex !== index && hoveredIndex !== index}>
+                    {index + 1}
+                </span>
+            </p>
             
             {#if person.spotifyData}
                 <h3>{person.spotifyData.name}</h3>
-                <p>{person.spotifyData.artist}</p>
+                <p class="artist-name">{person.spotifyData.artist}</p>
             {/if}
             
             <audio 
@@ -81,7 +87,7 @@
     section {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
     }
 
     button {
@@ -93,6 +99,11 @@
         width: 100%;
         max-width: 800px;
         cursor: pointer;
+        padding: 0.5rem 0;
+
+        &:focus-visible {
+            border: 2px solid var(--color-brand-dark);
+        }
 
         &:hover {
             background-color: var(--color-neutral-dark);
@@ -108,8 +119,35 @@
     audio {
         display: none;
     }
+    .status-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem;
+        grid-row: 1 / span 2;
+        grid-column: 1;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    .icon {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.5);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
 
-    p, h3 {
+    .icon.active {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+
+    h3, .artist-name {
         min-width: 0;
         white-space: nowrap;
         overflow: hidden; 
@@ -122,15 +160,7 @@
         grid-row: 1;
     }
 
-    p:nth-of-type(1) {
-        display: flex;
-        margin: 1rem;
-        grid-row: 1 / span 2;
-        grid-column: 1;
-
-    }
-
-    p:nth-of-type(2) {
+    .artist-name {
         grid-column: 2;
         grid-row: 2;
         color: var(--color-neutral-mid);
@@ -145,5 +175,4 @@
         border-radius: var(--border-radius-circle);
         object-fit: cover;
     }
-
 </style>
