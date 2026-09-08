@@ -11,17 +11,15 @@
     );
 </script>
 
-<header>
-    <h2>Vind je klasgenoten en docenten.</h2>
-    <search>
-        <form>
-            <label for="">
-                <SearchIcon size="2rem" />
-                <input type="text" bind:value={searchTerm} placeholder="Wie wil je opzoeken?">
-            </label>
-        </form>
-    </search>
-</header>
+<search>
+    <form>
+        <label>
+            <SearchIcon size="2rem" />
+            <input type="text" bind:value={searchTerm} placeholder="Wie wil je opzoeken?">
+        </label>
+    </form>
+</search>
+
 <section class="searchResults">
     <h3>Resultaten voor "{searchTerm}"</h3>
     <ul>
@@ -83,6 +81,11 @@
             padding: 0;
             li{
                 margin: var(--spacing-sm);
+                padding: var(--spacing-sm);
+                &:hover{
+                    background-color: var(--color-neutral-mid);
+                    border-radius: var(--border-radius-sm);
+                }
             }
         }
         
