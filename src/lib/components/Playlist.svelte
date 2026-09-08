@@ -66,13 +66,14 @@
     </section>
 
     <section class="controls">
-        <header> 
-            <p>Playlist</p>
-            <Seperator />
-            <p>{persons.length} nummers</p>
-        </header>
-
-        <a href="/">Delen</a>
+        <div class="controls-text">
+            <header> 
+                <p>Playlist</p>
+                <Seperator />
+                <p>{persons.length} nummers</p>
+            </header>
+            <a href="/">Delen</a>
+        </div>
 
         <button class="play-btn" onclick={togglePlaylist}>
             <span class="icon" class:active={!isPlaying}>
@@ -152,7 +153,7 @@
         max-width: 800px;
         position: relative;
 
-        > :global(*:first-child) {
+        > :global(:first-child) {
             grid-column: 1 / -1;
             grid-row: 1;
         }
@@ -166,37 +167,38 @@
             margin-bottom: 2rem;
 
             img {
-                width: 100%;
-                border-radius: var(--border-radius-large, 1rem);
-                object-fit: cover;
+                width: 50%;
+                align-self: center;
+                justify-self: center;
             }
         }
 
         .controls {
+            grid-column: 1 / -1;
+            grid-row: 3 / span 2;
             display: contents;
 
-            header {
+            .controls-text {
                 grid-column: 1;
                 grid-row: 3;
                 display: flex;
-                align-items: center;
+                flex-direction: column;
                 gap: 0.5rem;
-                padding-top: 0.5rem;
-            }
-
-            a {
-                grid-column: 1;
-                grid-row: 4;
                 margin-bottom: 2rem;
-                display: inline-block;
+
+                header {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
             }
 
             .play-btn {
                 grid-column: 2;
-                grid-row: 3 / span 3;
+                grid-row: 3 / span 2;
                 align-self: start; 
                 position: sticky;
-                top: 1rem;           
+                top: 1rem;
                 z-index: 10;
                 display: flex;
                 align-items: center; 
@@ -208,14 +210,13 @@
                 border-radius: var(--border-radius-circle);
                 background: var(--color-brand-mid);
                 padding: 0;
-                margin-top: 0.5rem;
                 cursor: pointer;
             }
         }
 
         .tracks {
-            grid-column: 1 / -1;
-            grid-row: 5;
+            grid-column: 1;
+            grid-row: 4;
             display: flex;
             flex-direction: column;
             gap: 1rem;
