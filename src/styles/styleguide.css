@@ -52,9 +52,12 @@ body {
 
     /* Neutral */
     --palette-neutral-900:     #121212;
-    --palette-neutral-800:     #535353;
-    --palette-neutral-700:     #B3B3B3;
-    --palette-neutral-600:     #F1F1F1;
+    --palette-neutral-850:     #2A2A2A;
+    --palette-neutral-800:     #434343;
+    --palette-neutral-700:     #535353;
+    --palette-neutral-600:     #B3B3B3;
+    --palette-neutral-500:     #F1F1F1;
+    --palette-neutral-400:     #F7F7F7;
 
     /* Kleuren deze WEL gebruiken====================================*/
     /* Brand */
@@ -68,10 +71,13 @@ body {
     --color-secondary-light:   var(--palette-secondary-300);
 
     /* Neutraal */
-    --color-neutral-darkest:   var(--palette-neutral-900);
-    --color-neutral-dark:      var(--palette-neutral-800);
-    --color-neutral-mid:       var(--palette-neutral-700);
-    --color-neutral-light:     var(--palette-neutral-600);
+    --color-neutral-900:       var(--palette-neutral-900);
+    --color-neutral-850:       var(--palette-neutral-850);
+    --color-neutral-800:       var(--palette-neutral-800);
+    --color-neutral-700:       var(--palette-neutral-700);
+    --color-neutral-600:       var(--palette-neutral-600);
+    --color-neutral-500:       var(--palette-neutral-500);
+    --color-neutral-400:       var(--palette-neutral-400);
 
     --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-light));
     --text-inverted: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
