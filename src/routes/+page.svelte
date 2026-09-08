@@ -21,7 +21,6 @@
     <Navbar />
     <Heading level={4} text="Groups" />
     <GroupView {persons} />
-    <GroupView />
     
 </main>
 

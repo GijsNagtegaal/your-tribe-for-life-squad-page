@@ -28,8 +28,8 @@
         width: 3.5rem;
         height: 3.5rem;
         border: none;
-        border-radius: var(--border-round);
-        background: var(--primary-accent);
+        border-radius: var(--border-radius-circle);
+        background: var(--color-brand-mid);
         cursor: pointer;
         padding: 0;
     }
