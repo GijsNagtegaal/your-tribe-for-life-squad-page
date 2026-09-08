@@ -71,14 +71,14 @@ body {
     --color-secondary-light:   var(--palette-secondary-300);
 
     /* Neutraal */
-    --color-neutral-900:       var(--palette-neutral-900);
-    --color-neutral-850:       var(--palette-neutral-850);
-    --color-neutral-800:       var(--palette-neutral-800);
-    --color-neutral-700:       var(--palette-neutral-700);
-    --color-neutral-600:       var(--palette-neutral-600);
-    --color-neutral-500:       var(--palette-neutral-500);
-    --color-neutral-400:       var(--palette-neutral-400);
-
+    --color-neutral-darkest:   var(--palette-neutral-900);  
+    --color-neutral-darker:    var(--palette-neutral-850); 
+    --color-neutral-dark:      var(--palette-neutral-800);  
+    --color-neutral-mid:       var(--palette-neutral-700); 
+    --color-neutral-light:     var(--palette-neutral-600);  
+    --color-neutral-lighter:   var(--palette-neutral-500);  
+    --color-neutral-lightest:  var(--palette-neutral-400);  
+    
     --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-light));
     --text-inverted: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
     --background: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
