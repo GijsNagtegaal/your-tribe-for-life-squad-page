@@ -1,14 +1,13 @@
 <script>
+    import Seperator from "./icons/Seperator.svelte";
     import PlayIcon from "./icons/PlayIcon.svelte";
     import PauseIcon from "./icons/PauseIcon.svelte";
     import PlayingIcon from "./icons/PlayingIcon.svelte";
 
-    let { persons } = $props();
+    let { persons = [] } = $props();
+    
     let audioElements = [];
-    
-    // Make hoveredIndex reactive!
     let hoveredIndex = $state(null); 
-    
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
 
@@ -16,6 +15,7 @@
         currentTrackIndex !== null ? persons[currentTrackIndex] : null
     );
 
+    // Toggles a specific track from the list
     function toggleAudio(index) {
         const selectedAudio = audioElements[index];
 
@@ -33,12 +33,61 @@
             isPlaying = false;
         }
     }
+
+    // Toggles the playlist from the main button
+    function togglePlaylist() {
+        if (persons.length === 0) return;
+        
+        // nothing playing = start the first track. Otherwise, toggle current.
+        if (currentTrackIndex === null) {
+            toggleAudio(0);
+        } else {
+            toggleAudio(currentTrackIndex);
+        }
+    }
+
+    // play the next song automatically
+    function playNext(currentIndex) {
+        const nextIndex = currentIndex + 1;
+        
+        // Check if there is a next song in the playlist
+        if (nextIndex < persons.length) {
+            toggleAudio(nextIndex);
+        } else {
+            // reset all when last song is fininshed
+            isPlaying = false;
+            currentTrackIndex = null;
+        }
+    }
 </script>
 
-<section>
+<!-- Controls -->
+<section class="playlist-header">
+    <header> 
+        <p>Playlist</p>
+        <Seperator />
+        <p>{persons.length} nummers</p>
+    </header>
+
+    <a href="/">
+        Delen
+    </a>
+
+    <button class="main-play-btn" onclick={togglePlaylist}>
+        <span class="icon play" class:active={!isPlaying}>
+            <PlayIcon size="2rem" />
+        </span>
+        <span class="icon pause" class:active={isPlaying}>
+            <PauseIcon size="2rem" />
+        </span>
+    </button>
+</section>
+
+<!-- Songlist -->
+<section class="track-list">
     {#each persons as person, index (person.id)}
         <button 
-            class={currentTrackIndex === index ? 'playing' : ''} 
+            class="track-btn {currentTrackIndex === index ? 'playing' : ''}" 
             onclick={() => toggleAudio(index)}
             onmouseenter={() => hoveredIndex = index} 
             onmouseleave={() => hoveredIndex = null}
@@ -73,64 +122,57 @@
             <audio 
                 bind:this={audioElements[index]} 
                 src={person.audioUrl}
-                onended={() => {
-                    isPlaying = false;
-                    currentTrackIndex = null;
-                }}>
+                onended={() => playNext(index)}>
             </audio>
             <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
         </button>
     {/each}
 </section>
 
+
 <style>
-    section {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
 
-    button {
-        all: unset;
+    /* --- Playlist Header Styles --- */
+    .playlist-header {
         display: grid;
-        grid-template-columns: auto 1fr auto;
-        grid-template-rows: repeat(2, 1.5rem);
-        align-items: center;
         width: 100%;
-        max-width: 800px;
-        cursor: pointer;
-        padding: 0.5rem 0;
-
-        &:focus-visible {
-            border: 2px solid var(--color-brand-dark);
-        }
-
-        &:hover {
-            background-color: var(--color-neutral-dark);
-        }
-
-        &.playing {
-            h3 {
-                color: var(--color-brand-mid);
-            }
-        }
+        min-height: 40px; 
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
     }
-
-    audio {
-        display: none;
-    }
-    .status-icon {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 1rem;
-        grid-row: 1 / span 2;
+    
+    .playlist-header header {
         grid-column: 1;
-        width: 1.5rem;
-        height: 1.5rem;
+        grid-row: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
     }
-    .icon {
+
+    .playlist-header a {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .main-play-btn {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        display: flex;
+        align-items: center; 
+        position: relative;
+        color: var(--text-inverted);
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        border: none;
+        border-radius: var(--border-radius-circle);
+        background: var(--color-brand-mid);
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .main-play-btn .icon {
         position: absolute;
         display: flex;
         align-items: center;
@@ -142,31 +184,97 @@
         pointer-events: none;
     }
 
-    .icon.active {
+    .main-play-btn .icon.active {
         opacity: 1;
         transform: rotate(0deg) scale(1);
     }
 
-    h3, .artist-name {
+    /* --- Tracklist Styles --- */
+    .track-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .track-btn {
+        all: unset;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: repeat(2, 1.5rem);
+        align-items: center;
+        width: 100%;
+        max-width: 800px;
+        cursor: pointer;
+        padding: 0.5rem 0;
+        transition: background-color 0.2s;
+    }
+
+    .track-btn:focus-visible {
+        border: 2px solid var(--color-brand-dark);
+    }
+
+    .track-btn:hover {
+        background-color: var(--color-neutral-dark);
+    }
+
+    .track-btn.playing h3 {
+        color: var(--color-brand-mid);
+    }
+
+    .track-list audio {
+        display: none;
+    }
+
+    .track-list .status-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem;
+        grid-row: 1 / span 2;
+        grid-column: 1;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    
+    .track-list .icon {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.5);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    .track-list .icon.active {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+
+    .track-list h3, .track-list .artist-name {
         min-width: 0;
         white-space: nowrap;
         overflow: hidden; 
         text-overflow: ellipsis;
+        margin: 0;
     }
 
-    h3 {
+    .track-list h3 {
         font-size: var(--font-size-h5);
         grid-column: 2;
         grid-row: 1;
     }
 
-    .artist-name {
+    .track-list .artist-name {
         grid-column: 2;
         grid-row: 2;
         color: var(--color-neutral-mid);
     }
 
-    img {
+    .track-list img {
         padding: .5rem;
         grid-column: 3;
         grid-row: 1 / span 2; 

@@ -1,12 +1,10 @@
 <script>
-	import PlaylistSongs from "$lib/components/PlaylistSongs.svelte";
-	import PlaylistControls from "$lib/components/PlaylistControls.svelte";
+	import Playlist from "$lib/components/Playlist.svelte";
 	let { data } = $props();
 </script>
 
 <main>
-	<PlaylistControls/>
-	<PlaylistSongs persons={data.persons} />
+	<Playlist persons={data.persons} />
 </main>
 
 <style>
