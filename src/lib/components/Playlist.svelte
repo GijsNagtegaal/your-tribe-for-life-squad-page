@@ -3,10 +3,11 @@
     import PlayIcon from "./icons/PlayIcon.svelte";
     import PauseIcon from "./icons/PauseIcon.svelte";
     import PlayingIcon from "./icons/PlayingIcon.svelte";
+    import Prevpage from "./Prevpage.svelte";
 
     let { persons = [] } = $props();
     
-    let audioElements = [];
+    let audioElements = $state([]);
     let hoveredIndex = $state(null); 
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
@@ -15,7 +16,6 @@
         currentTrackIndex !== null ? persons[currentTrackIndex] : null
     );
 
-    // Toggles a specific track from the list
     function toggleAudio(index) {
         const selectedAudio = audioElements[index];
 
@@ -34,11 +34,9 @@
         }
     }
 
-    // Toggles the playlist from the main button
     function togglePlaylist() {
         if (persons.length === 0) return;
         
-        // nothing playing = start the first track. Otherwise, toggle current.
         if (currentTrackIndex === null) {
             toggleAudio(0);
         } else {
@@ -46,241 +44,249 @@
         }
     }
 
-    // play the next song automatically
     function playNext(currentIndex) {
         const nextIndex = currentIndex + 1;
         
-        // Check if there is a next song in the playlist
         if (nextIndex < persons.length) {
             toggleAudio(nextIndex);
         } else {
-            // reset all when last song is fininshed
             isPlaying = false;
             currentTrackIndex = null;
         }
     }
 </script>
 
-<!-- Controls -->
-<section class="playlist-header">
-    <header> 
-        <p>Playlist</p>
-        <Seperator />
-        <p>{persons.length} nummers</p>
-    </header>
+<article class="playlist">
+    <Prevpage />
+    
+    <section class="hero">
+        <img src="src/lib/assets/playlist.png" alt="">
+        <h2>Playlist van jaar 26/27</h2>
+        <p>Luister hier naar de favoriete muziek van studenten en docenten in het eerste jaar</p>
+    </section>
 
-    <a href="/">
-        Delen
-    </a>
+    <section class="controls">
+        <header> 
+            <p>Playlist</p>
+            <Seperator />
+            <p>{persons.length} nummers</p>
+        </header>
 
-    <button class="main-play-btn" onclick={togglePlaylist}>
-        <span class="icon play" class:active={!isPlaying}>
-            <PlayIcon size="2rem" />
-        </span>
-        <span class="icon pause" class:active={isPlaying}>
-            <PauseIcon size="2rem" />
-        </span>
-    </button>
-</section>
+        <a href="/">Delen</a>
 
-<!-- Songlist -->
-<section class="track-list">
-    {#each persons as person, index (person.id)}
-        <button 
-            class="track-btn {currentTrackIndex === index ? 'playing' : ''}" 
-            onclick={() => toggleAudio(index)}
-            onmouseenter={() => hoveredIndex = index} 
-            onmouseleave={() => hoveredIndex = null}
-        >
-            <p class="status-icon">
-                <!-- Pause: playing and hovered -->
-                <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
-                    <PauseIcon />
-                </span>
-                
-                <!-- Playing: playing but not hovered -->
-                <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
-                    <PlayingIcon />
-                </span>
-                
-                <!-- Play: hovered OR it's the current track that is paused -->
-                <span class="icon" class:active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
-                    <PlayIcon />
-                </span>
-                
-                <!-- Default Number: not playing, not paused-current, not hovered -->
-                <span class="icon" class:active={currentTrackIndex !== index && hoveredIndex !== index}>
-                    {index + 1}
-                </span>
-            </p>
-            
-            {#if person.spotifyData}
-                <h3>{person.spotifyData.name}</h3>
-                <p class="artist-name">{person.spotifyData.artist}</p>
-            {/if}
-            
-            <audio 
-                bind:this={audioElements[index]} 
-                src={person.audioUrl}
-                onended={() => playNext(index)}>
-            </audio>
-            <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
+        <button class="play-btn" onclick={togglePlaylist}>
+            <span class="icon" class:active={!isPlaying}>
+                <PlayIcon size="2rem" />
+            </span>
+            <span class="icon" class:active={isPlaying}>
+                <PauseIcon size="2rem" />
+            </span>
         </button>
-    {/each}
-</section>
+    </section>
 
+    <section class="tracks">
+        {#each persons as person, index (person.id)}
+            <button 
+                class="track-btn"
+                class:playing={currentTrackIndex === index} 
+                onclick={() => toggleAudio(index)}
+                onmouseenter={() => hoveredIndex = index} 
+                onmouseleave={() => hoveredIndex = null}
+            >
+                <span class="status-indicator">
+                    <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
+                        <PauseIcon />
+                    </span>
+                    
+                    <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
+                        <PlayingIcon />
+                    </span>
+                    
+                    <span class="icon" class:active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
+                        <PlayIcon />
+                    </span>
+                    
+                    <span class="icon" class:active={currentTrackIndex !== index && hoveredIndex !== index}>
+                        {index + 1}
+                    </span>
+                </span>
+                
+                {#if person.spotifyData}
+                    <h3>{person.spotifyData.name}</h3>
+                    <p>{person.spotifyData.artist}</p>
+                {/if}
+                
+                <audio 
+                    bind:this={audioElements[index]} 
+                    src={person.audioUrl}
+                    onended={() => playNext(index)}>
+                </audio>
+                
+                <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
+            </button>
+        {/each}
+    </section>
+</article>
 
 <style>
-
-    /* --- Playlist Header Styles --- */
-    .playlist-header {
-        display: grid;
-        width: 100%;
-        min-height: 40px; 
-        grid-template-columns: 1fr auto;
-        grid-template-rows: auto auto;
-    }
-    
-    .playlist-header header {
-        grid-column: 1;
-        grid-row: 1;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .playlist-header a {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .main-play-btn {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-        display: flex;
-        align-items: center; 
-        position: relative;
-        color: var(--text-inverted);
-        justify-content: center;
-        width: 3.5rem;
-        height: 3.5rem;
-        border: none;
-        border-radius: var(--border-radius-circle);
-        background: var(--color-brand-mid);
-        cursor: pointer;
-        padding: 0;
-    }
-
-    .main-play-btn .icon {
+    .icon {
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         transform: rotate(-90deg) scale(0.5);
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
+
+        &.active {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
     }
 
-    .main-play-btn .icon.active {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
-    }
-
-    /* --- Tracklist Styles --- */
-    .track-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .track-btn {
-        all: unset;
+    .playlist {
         display: grid;
-        grid-template-columns: auto 1fr auto;
-        grid-template-rows: repeat(2, 1.5rem);
-        align-items: center;
+        grid-template-columns: 1fr auto;
         width: 100%;
         max-width: 800px;
-        cursor: pointer;
-        padding: 0.5rem 0;
-        transition: background-color 0.2s;
-    }
-
-    .track-btn:focus-visible {
-        border: 2px solid var(--color-brand-dark);
-    }
-
-    .track-btn:hover {
-        background-color: var(--color-neutral-dark);
-    }
-
-    .track-btn.playing h3 {
-        color: var(--color-brand-mid);
-    }
-
-    .track-list audio {
-        display: none;
-    }
-
-    .track-list .status-icon {
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 1rem;
-        grid-row: 1 / span 2;
-        grid-column: 1;
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-    
-    .track-list .icon {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transform: rotate(-90deg) scale(0.5);
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-                    opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-    }
 
-    .track-list .icon.active {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
-    }
+        > :global(*:first-child) {
+            grid-column: 1 / -1;
+            grid-row: 1;
+        }
 
-    .track-list h3, .track-list .artist-name {
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden; 
-        text-overflow: ellipsis;
-        margin: 0;
-    }
+        .hero {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
 
-    .track-list h3 {
-        font-size: var(--font-size-h5);
-        grid-column: 2;
-        grid-row: 1;
-    }
+            img {
+                width: 100%;
+                border-radius: var(--border-radius-large, 1rem);
+                object-fit: cover;
+            }
+        }
 
-    .track-list .artist-name {
-        grid-column: 2;
-        grid-row: 2;
-        color: var(--color-neutral-mid);
-    }
+        .controls {
+            display: contents;
 
-    .track-list img {
-        padding: .5rem;
-        grid-column: 3;
-        grid-row: 1 / span 2; 
-        width: 4rem;
-        height: 4rem; 
-        border-radius: var(--border-radius-circle);
-        object-fit: cover;
+            header {
+                grid-column: 1;
+                grid-row: 3;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding-top: 0.5rem;
+            }
+
+            a {
+                grid-column: 1;
+                grid-row: 4;
+                margin-bottom: 2rem;
+                display: inline-block;
+            }
+
+            .play-btn {
+                grid-column: 2;
+                grid-row: 3 / span 3;
+                align-self: start; 
+                position: sticky;
+                top: 1rem;           
+                z-index: 10;
+                display: flex;
+                align-items: center; 
+                justify-content: center;
+                color: var(--text-inverted);
+                width: 3.5rem;
+                height: 3.5rem;
+                border: none;
+                border-radius: var(--border-radius-circle);
+                background: var(--color-brand-mid);
+                padding: 0;
+                margin-top: 0.5rem;
+                cursor: pointer;
+            }
+        }
+
+        .tracks {
+            grid-column: 1 / -1;
+            grid-row: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .track-btn {
+                all: unset;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                grid-template-rows: repeat(2, 1.5rem);
+                align-items: center;
+                width: 100%;
+                padding: 0.5rem 0;
+                cursor: pointer;
+
+                &:focus-visible {
+                    border: 2px solid var(--color-brand-dark);
+                }
+
+                &:hover {
+                    background-color: var(--color-neutral-dark);
+                }
+
+                &.playing h3 {
+                    color: var(--color-brand-mid);
+                }
+
+                .status-indicator { 
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 1rem;
+                    grid-row: 1 / span 2;
+                    grid-column: 1;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                h3, p {
+                    grid-column: 2;
+                    min-width: 0;
+                    white-space: nowrap;
+                    overflow: hidden; 
+                    text-overflow: ellipsis;
+                    margin: 0;
+                }
+
+                h3 {
+                    font-size: var(--font-size-h5);
+                    grid-row: 1;
+                }
+
+                p {
+                    grid-row: 2;
+                    color: var(--color-neutral-mid);
+                }
+
+                img {
+                    padding: 0.5rem;
+                    grid-column: 3;
+                    grid-row: 1 / span 2; 
+                    width: 4rem;
+                    height: 4rem; 
+                    border-radius: var(--border-radius-circle);
+                    object-fit: cover;
+                }
+
+                audio {
+                    display: none;
+                }
+            }
+        }
     }
 </style>
