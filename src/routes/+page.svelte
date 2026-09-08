@@ -6,7 +6,8 @@
     import GroupView from "$lib/components/GroupView.svelte";
     import Dropdown from "$lib/components/Dropdown.svelte";
     import TeacherCarrousel from "$lib/components/TeachersCaroussel.svelte";
-    
+    import PersonSquare from "$lib/components/PersonSquare.svelte";
+
     let { data } = $props();
     const persons = data.persons;
     
@@ -16,9 +17,10 @@
     <Heading level={4} text="Docenten" />
     <TeacherCarrousel {persons} />
 
-    {#each persons as persons}
-        <p>{persons.name}</p>
+    {#each persons as person}
+        <p>{person.name}</p>
     {/each}
+    
     <Dropdown />
     <Prevpage url="/terug" text="terug" />
     <Navbar />
