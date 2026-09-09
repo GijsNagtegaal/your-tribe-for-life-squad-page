@@ -4,6 +4,7 @@
     import PauseIcon from "./icons/PauseIcon.svelte";
     import PlayingIcon from "./icons/PlayingIcon.svelte";
     import Prevpage from "./Prevpage.svelte";
+    import Share from "./icons/Share.svelte";
 
     let { persons = [] } = $props();
     
@@ -56,6 +57,8 @@
     }
 </script>
 
+<!-- good use of snippet element -->
+<!-- https://svelte.dev/docs/svelte/snippet -->
 {#snippet playButton()}
     <button onclick={togglePlaylist}>
         <i data-active={!isPlaying}><PlayIcon size="2rem" /></i>
@@ -84,10 +87,13 @@
         <menu>
             <span> 
                 <p>Playlist</p>
-                <Seperator />
+                <Seperator size="0.3rem" />
                 <p>{persons.length} nummers</p>
             </span>
-            <a href="/">Delen</a>
+            <a href="/playlist">
+                <Share size="1rem" />
+                Delen
+            </a>
         </menu>
         {@render playButton()}
     </section>
@@ -225,6 +231,7 @@
         grid-column: 1 / -1;
         grid-row: 3 / span 2;
         display: contents;
+        color: var(--color-neutral-mid);
 
         menu {
             grid-column: 1;
@@ -241,6 +248,13 @@
                 align-items: center;
                 gap: 0.5rem;
             }
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.5rem;
         }
 
         button {
