@@ -127,6 +127,7 @@
                 {/if}
                 
                 <audio bind:this={audioElements[index]} src={person.audioUrl} onended={() => playNext(index)}></audio>
+                <a href="/studenten/{person.name}"></a>
                 <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
             </button>
         {/each}

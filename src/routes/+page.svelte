@@ -16,7 +16,6 @@
     {#each persons as person}
         <p>{person.name}</p>
     {/each}
-    <Dropdown />
     <Banner />
     <Prevpage url="/terug" text="terug" />
     <Navbar />
