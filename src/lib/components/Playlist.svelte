@@ -5,18 +5,26 @@
     import PlayingIcon from "./icons/PlayingIcon.svelte";
     import Prevpage from "./Prevpage.svelte";
     import Share from "./icons/Share.svelte";
+    import Miniplayer from "./Miniplayer.svelte";
     import PlaylistImg from '$lib/assets/playlist2627.png';
-
 
     let { persons = [] } = $props();
     
     let audioElements = $state([]);
+    let currentTimes = $state([]);
+    let durations = $state([]);
     let hoveredIndex = $state(null); 
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
 
     let currentPerson = $derived(
         currentTrackIndex !== null ? persons[currentTrackIndex] : null
+    );
+
+    let timeLeft = $derived(
+        currentTrackIndex !== null && durations[currentTrackIndex]
+            ? durations[currentTrackIndex] - (currentTimes[currentTrackIndex] || 0)
+            : 0
     );
 
     function toggleAudio(index) {
@@ -58,7 +66,6 @@
         }
     }
 </script>
-
 <!-- good use of snippet element -->
 <!-- https://svelte.dev/docs/svelte/snippet -->
 {#snippet playButton()}
@@ -128,13 +135,33 @@
                     <p>{person.spotifyData.artist}</p>
                 {/if}
                 
-                <audio bind:this={audioElements[index]} src={person.audioUrl} onended={() => playNext(index)}></audio>
+                <audio 
+                    bind:this={audioElements[index]} 
+                    bind:currentTime={currentTimes[index]} 
+                    bind:duration={durations[index]}
+                    src={person.audioUrl} 
+                    onended={() => playNext(index)}>
+                </audio>
+                
                 <a href="/studenten/{person.name}"></a>
                 <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
             </button>
         {/each}
     </section>
 </article>
+
+{#if currentPerson}
+    <Miniplayer 
+        songName={currentPerson.spotifyData?.name}
+        artist={currentPerson.spotifyData?.artist}
+        mugshot={currentPerson.mugshot}
+        favcolor={currentPerson.fav_color}
+        currentTime={currentTimes[currentTrackIndex] || 0}
+        duration={durations[currentTrackIndex] || 0}
+        isPlaying={isPlaying} 
+        togglePlayback={togglePlaylist} 
+    />
+{/if}
 
 <style>
 
@@ -294,6 +321,7 @@
             width: 100%;
             padding: 0.5rem 0;
             cursor: pointer;
+            border-radius: var(--border-radius-sm);
 
             &:focus-visible {
                 border: 2px solid var(--color-brand-dark);
@@ -303,9 +331,14 @@
                 background-color: var(--color-neutral-dark);
             }
 
-            &[data-playing="true"] h3 {
-                color: var(--color-brand-mid);
-            }
+            &[data-playing="true"] {
+                background-color: var(--color-neutral-dark);
+                h3 {
+                    color: var(--color-brand-mid);
+                }
+
+
+            } 
 
             span { 
                 position: relative;
