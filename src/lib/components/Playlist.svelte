@@ -150,19 +150,20 @@
     </section>
 </article>
 
-{#if currentPerson}
-    <Miniplayer 
-        songName={currentPerson.spotifyData?.name}
-        artist={currentPerson.spotifyData?.artist}
-        mugshot={currentPerson.mugshot}
-        favcolor={currentPerson.fav_color}
-        currentTime={currentTimes[currentTrackIndex] || 0}
-        duration={durations[currentTrackIndex] || 0}
-        isPlaying={isPlaying} 
-        togglePlayback={togglePlaylist} 
-    />
-{/if}
-
+<section class="miniplayer">
+    {#if currentPerson}
+        <Miniplayer 
+            songName={currentPerson.spotifyData?.name}
+            artist={currentPerson.spotifyData?.artist}
+            mugshot={currentPerson.mugshot}
+            favcolor={currentPerson.fav_color}
+            currentTime={currentTimes[currentTrackIndex] || 0}
+            duration={durations[currentTrackIndex] || 0}
+            isPlaying={isPlaying} 
+            togglePlayback={togglePlaylist} 
+        />
+    {/if}
+</section>
 <style>
 
     header.top-bar {
@@ -402,7 +403,6 @@
             }
         }
     }
-
     @keyframes slideDown {
         0% {
             transform: translateX(-50%) translateY(-100%);
