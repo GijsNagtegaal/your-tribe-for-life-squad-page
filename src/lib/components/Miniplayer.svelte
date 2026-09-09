@@ -69,6 +69,10 @@
             object-fit: cover;
             border-radius: var(--border-radius-sm);
         }
+
+        h4{
+            font-size: var(--font-size-h5);
+        }
     }
 
     .control-button {
