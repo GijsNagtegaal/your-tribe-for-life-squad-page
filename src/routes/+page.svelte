@@ -15,8 +15,6 @@
 </script>
 
 <main>
-    <Heading level={4} text="Docenten" />
-
     <TeacherCarrousel {teachers} />
 
     {#each persons as person}
