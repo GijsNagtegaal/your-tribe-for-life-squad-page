@@ -2,7 +2,6 @@
     let { teachers } = $props();
     import PersonSquare from './PersonSquare.svelte';
     import PlayIcon from "$lib/components/icons/PlayIcon.svelte";
-    import NavArrow from "$lib/components/icons/NavArrow.svelte";
     import Heading from "$lib/components/Heading.svelte"
 </script>
 
@@ -11,11 +10,6 @@
         <a href="/docenten"><Heading level={3} text="Docenten" /></a>
         <a href="/docenten">Toon allen</a>
     </header>
-
-    <button class="teachers__nav teachers__nav--prev">
-        <NavArrow />
-        <span class="sr-only">Vorige</span>
-    </button>
 
     <ul>
         {#each teachers as teacher}
@@ -29,11 +23,6 @@
             </li>
         {/each}
     </ul>
-
-    <button class="teachers__nav teachers__nav--next">
-        <NavArrow />
-        <span class="sr-only">Vorige</span>
-    </button>
 
 </section>
 
@@ -75,7 +64,6 @@
             }
         }
     }
-
     figure{
         display: flex;
         flex-direction: column;
