@@ -56,60 +56,63 @@
     }
 </script>
 
+{#snippet playButton()}
+    <button onclick={togglePlaylist}>
+        <i data-active={!isPlaying}><PlayIcon size="2rem" /></i>
+        <i data-active={isPlaying}><PauseIcon size="2rem" /></i>
+    </button>
+{/snippet}
+
+<header class="top-bar">
+    <nav>
+        <Prevpage />
+        <h2>Playlist van jaar 26/27</h2>
+    </nav>
+    {@render playButton()}
+</header>
+
 <article class="playlist">
     <Prevpage />
     
-    <section class="hero">
+    <header>
         <img src="src/lib/assets/playlist.png" alt="">
         <h2>Playlist van jaar 26/27</h2>
         <p>Luister hier naar de favoriete muziek van studenten en docenten in het eerste jaar</p>
-    </section>
+    </header>
 
     <section class="controls">
-        <div class="controls-text">
-            <header> 
+        <menu>
+            <span> 
                 <p>Playlist</p>
                 <Seperator />
                 <p>{persons.length} nummers</p>
-            </header>
+            </span>
             <a href="/">Delen</a>
-        </div>
-
-        <button class="play-btn" onclick={togglePlaylist}>
-            <span class="icon" class:active={!isPlaying}>
-                <PlayIcon size="2rem" />
-            </span>
-            <span class="icon" class:active={isPlaying}>
-                <PauseIcon size="2rem" />
-            </span>
-        </button>
+        </menu>
+        {@render playButton()}
     </section>
 
     <section class="tracks">
         {#each persons as person, index (person.id)}
             <button 
-                class="track-btn"
-                class:playing={currentTrackIndex === index} 
+                data-playing={currentTrackIndex === index} 
                 onclick={() => toggleAudio(index)}
                 onmouseenter={() => hoveredIndex = index} 
                 onmouseleave={() => hoveredIndex = null}
             >
-                <span class="status-indicator">
-                    <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
+                <span>
+                    <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
                         <PauseIcon />
-                    </span>
-                    
-                    <span class="icon" class:active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
+                    </i>
+                    <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
                         <PlayingIcon />
-                    </span>
-                    
-                    <span class="icon" class:active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
+                    </i>
+                    <i data-active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
                         <PlayIcon />
-                    </span>
-                    
-                    <span class="icon" class:active={currentTrackIndex !== index && hoveredIndex !== index}>
+                    </i>
+                    <i data-active={currentTrackIndex !== index && hoveredIndex !== index}>
                         {index + 1}
-                    </span>
+                    </i>
                 </span>
                 
                 {#if person.spotifyData}
@@ -117,12 +120,7 @@
                     <p>{person.spotifyData.artist}</p>
                 {/if}
                 
-                <audio 
-                    bind:this={audioElements[index]} 
-                    src={person.audioUrl}
-                    onended={() => playNext(index)}>
-                </audio>
-                
+                <audio bind:this={audioElements[index]} src={person.audioUrl} onended={() => playNext(index)}></audio>
                 <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
             </button>
         {/each}
@@ -130,35 +128,84 @@
 </article>
 
 <style>
-    .icon {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transform: rotate(-90deg) scale(0.5);
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
 
-        &.active {
-            opacity: 1;
-            transform: rotate(0deg) scale(1);
+    header.top-bar {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        max-width: 800px;
+        padding: 0.75rem 1rem;
+        background: var(--background-color, #121212);
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+    
+        animation: slideDown linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 200px 400px;
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            h2 {
+                margin: 0;
+                font-size: 1.25rem;
+            }
         }
     }
 
-    .playlist {
+    header.top-bar button, section.controls button {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        color: var(--text-inverted);
+        width: 3.5rem;
+        height: 3.5rem;
+        border: none;
+        border-radius: var(--border-radius-circle);
+        background: var(--color-brand-mid);
+        padding: 0;
+        cursor: pointer;
+        position: relative;
+
+        i {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            font-style: normal;
+
+            &[data-active="true"] {
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+        }
+    }
+
+    article.playlist {
         display: grid;
         grid-template-columns: 1fr auto;
         width: 100%;
         max-width: 800px;
         position: relative;
+        margin: 0 auto;
 
-        > :global(:first-child) {
+        /* this way i can target the component with styling */
+        &:global(:first-child) {
             grid-column: 1 / -1;
             grid-row: 1;
         }
 
-        .hero {
+        header {
             grid-column: 1 / -1;
             grid-row: 2;
             display: flex;
@@ -166,128 +213,147 @@
             gap: 0.5rem;
             margin-bottom: 2rem;
 
-            img {
+        img {
                 width: 50%;
                 align-self: center;
                 justify-self: center;
             }
         }
+    }
 
-        .controls {
-            grid-column: 1 / -1;
-            grid-row: 3 / span 2;
-            display: contents;
+    section.controls {
+        grid-column: 1 / -1;
+        grid-row: 3 / span 2;
+        display: contents;
 
-            .controls-text {
-                grid-column: 1;
-                grid-row: 3;
+        menu {
+            grid-column: 1;
+            grid-row: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            margin-top: 0;
+            padding: 0;
+
+        span {
                 display: flex;
-                flex-direction: column;
+                align-items: center;
                 gap: 0.5rem;
-                margin-bottom: 2rem;
-
-                header {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-            }
-
-            .play-btn {
-                grid-column: 2;
-                grid-row: 3 / span 2;
-                align-self: start; 
-                position: sticky;
-                top: 1rem;
-                z-index: 10;
-                display: flex;
-                align-items: center; 
-                justify-content: center;
-                color: var(--text-inverted);
-                width: 3.5rem;
-                height: 3.5rem;
-                border: none;
-                border-radius: var(--border-radius-circle);
-                background: var(--color-brand-mid);
-                padding: 0;
-                cursor: pointer;
             }
         }
 
-        .tracks {
-            grid-column: 1;
-            grid-row: 4;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        button {
+            grid-column: 2;
+            grid-row: 3 / span 2;
+            align-self: start; 
+            position: relative;
+            z-index: 10;
+        }
+    }
 
-            .track-btn {
-                all: unset;
-                display: grid;
-                grid-template-columns: auto 1fr auto;
-                grid-template-rows: repeat(2, 1.5rem);
+    section.tracks {
+        grid-column: 1 / span 2;
+        grid-row: 4;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        button {
+            all: unset;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            grid-template-rows: repeat(2, 1.5rem);
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 0;
+            cursor: pointer;
+
+            &:focus-visible {
+                border: 2px solid var(--color-brand-dark);
+            }
+
+            &:hover {
+                background-color: var(--color-neutral-dark);
+            }
+
+            &[data-playing="true"] h3 {
+                color: var(--color-brand-mid);
+            }
+
+            span { 
+                position: relative;
+                display: flex;
                 align-items: center;
-                width: 100%;
-                padding: 0.5rem 0;
-                cursor: pointer;
+                justify-content: center;
+                margin: 1rem;
+                grid-row: 1 / span 2;
+                grid-column: 1;
+                width: 1.5rem;
+                height: 1.5rem;
 
-                &:focus-visible {
-                    border: 2px solid var(--color-brand-dark);
-                }
-
-                &:hover {
-                    background-color: var(--color-neutral-dark);
-                }
-
-                &.playing h3 {
-                    color: var(--color-brand-mid);
-                }
-
-                .status-indicator { 
-                    position: relative;
+                i {
+                    position: absolute;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin: 1rem;
-                    grid-row: 1 / span 2;
-                    grid-column: 1;
-                    width: 1.5rem;
-                    height: 1.5rem;
-                }
+                    opacity: 0;
+                    transform: rotate(-90deg) scale(0.5);
+                    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                    pointer-events: none;
+                    font-style: normal;
 
-                h3, p {
-                    grid-column: 2;
-                    min-width: 0;
-                    white-space: nowrap;
-                    overflow: hidden; 
-                    text-overflow: ellipsis;
-                    margin: 0;
-                }
-
-                h3 {
-                    font-size: var(--font-size-h5);
-                    grid-row: 1;
-                }
-
-                p {
-                    grid-row: 2;
-                    color: var(--color-neutral-mid);
-                }
-
-                img {
-                    padding: 0.5rem;
-                    grid-column: 3;
-                    grid-row: 1 / span 2; 
-                    width: 4rem;
-                    height: 4rem; 
-                    border-radius: var(--border-radius-circle);
-                    object-fit: cover;
-                }
-
-                audio {
-                    display: none;
+                    &[data-active="true"] {
+                        opacity: 1;
+                        transform: rotate(0deg) scale(1);
+                    }
                 }
             }
+
+            h3, p {
+                grid-column: 2;
+                min-width: 0;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;
+                margin: 0;
+            }
+
+            h3 {
+                font-size: var(--font-size-h5);
+                grid-row: 1;
+            }
+
+            p {
+                grid-row: 2;
+                color: var(--color-neutral-mid);
+            }
+
+            img {
+                padding: 0.5rem;
+                grid-column: 3;
+                grid-row: 1 / span 2; 
+                width: 4rem;
+                height: 4rem; 
+                border-radius: var(--border-radius-circle);
+                object-fit: cover;
+            }
+            audio {
+                display: none;
+            }
+        }
+    }
+
+    @keyframes slideDown {
+        0% {
+            transform: translateX(-50%) translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        100% {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
         }
     }
 </style>
