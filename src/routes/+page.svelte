@@ -3,6 +3,7 @@
     import Prevpage from "$lib/components/Prevpage.svelte";
     import Heading from "$lib/components/Heading.svelte";
     import GroupView from "$lib/components/GroupView.svelte";
+    import YearCards from "$lib/components/YearCards.svelte";
     import Dropdown from "$lib/components/Dropdown.svelte";
     import PersonSquare from "$lib/components/PersonSquare.svelte";
     import Banner from "$lib/components/Banner.svelte";
@@ -20,7 +21,7 @@
     <Prevpage url="/terug" text="terug" />
     <Heading level={4} text="Groups" />
     <GroupView {persons} />
-    
+    <YearCards />
 </main>
 
 <style>
