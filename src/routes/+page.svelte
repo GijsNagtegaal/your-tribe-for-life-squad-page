@@ -17,12 +17,10 @@
     {/each}
     <Dropdown />
     <Prevpage url="/terug" text="terug" />
-    <Navbar />
     <Heading level={4} text="Groups" />
     <GroupView {persons} />
     
 </main>
-<Navbar />
 
 <style>
 
