@@ -311,7 +311,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 1rem;
+                margin-right: 1rem;
                 grid-row: 1 / span 2;
                 grid-column: 1;
                 width: 1.5rem;
