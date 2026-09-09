@@ -153,7 +153,7 @@
     
         animation: slideDown linear both;
         animation-timeline: scroll(root block);
-        animation-range: 200px 400px;
+        animation-range: 300px 400px;
 
         nav {
             display: flex;
