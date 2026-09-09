@@ -52,10 +52,13 @@ body {
     --palette-secondary-300:   #6940DD;
 
     /* Neutral */
-    --palette-neutral-900:     #121212;
-    --palette-neutral-800:     #535353;
-    --palette-neutral-700:     #B3B3B3;
-    --palette-neutral-600:     #F1F1F1;
+    --palette-neutral-900:     #101010;
+    --palette-neutral-850:     #2A2A2A;
+    --palette-neutral-800:     #434343;
+    --palette-neutral-700:     #535353;
+    --palette-neutral-600:     #B3B3B3;
+    --palette-neutral-500:     #F1F1F1;
+    --palette-neutral-400:     #F7F7F7;
 
     /* Kleuren deze WEL gebruiken====================================*/
     /* Brand */
@@ -69,14 +72,17 @@ body {
     --color-secondary-light:   var(--palette-secondary-300);
 
     /* Neutraal */
-    --color-neutral-darkest:   var(--palette-neutral-900);
-    --color-neutral-dark:      var(--palette-neutral-800);
-    --color-neutral-mid:       var(--palette-neutral-700);
-    --color-neutral-light:     var(--palette-neutral-600);
-
-    --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-light));
-    --text-inverted: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
-    --background: light-dark(var(--color-neutral-light),var(--color-neutral-darkest) );
+    --color-neutral-darkest:   var(--palette-neutral-900);  
+    --color-neutral-darker:    var(--palette-neutral-850); 
+    --color-neutral-dark:      var(--palette-neutral-800);  
+    --color-neutral-mid:       var(--palette-neutral-700); 
+    --color-neutral-light:     var(--palette-neutral-600);  
+    --color-neutral-lighter:   var(--palette-neutral-500);  
+    --color-neutral-lightest:  var(--palette-neutral-400);  
+    
+    --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-lightest));
+    --text-inverted: light-dark(var(--color-neutral-lightest),var(--color-neutral-darkest) );
+    --background: light-dark(var(--color-neutral-lightest),var(--color-neutral-darkest) );
 
     --transparent: #00000091;
 
@@ -101,6 +107,7 @@ body {
     --border-radius-lg:     0.625rem;
     --border-radius-xl:     0.75rem;
     --border-radius-2xl:    1.5rem;
+    --border-radius-3xl:    2.5rem;
 
 
     /*typografie=====================================================*/
