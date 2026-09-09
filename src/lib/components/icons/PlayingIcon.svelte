@@ -12,7 +12,7 @@
     .bar {
         transform-origin: bottom;
         transform-box: fill-box;
-        animation: moveitbabyy 1s infinite ease-in-out;
+        animation: playing 1s infinite ease-in-out;
     }
 
     .bar-1 {
@@ -29,7 +29,7 @@
         animation-delay: -0.5s;
     }
 
-    @keyframes moveitbabyy {
+    @keyframes playing {
         0%, 100% {
             transform: scaleY(0.25);
         }

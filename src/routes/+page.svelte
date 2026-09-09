@@ -5,7 +5,8 @@
     import GroupView from "$lib/components/GroupView.svelte";
     import Dropdown from "$lib/components/Dropdown.svelte";
     import PersonSquare from "$lib/components/PersonSquare.svelte";
-    
+    import Banner from "$lib/components/Banner.svelte";
+
     let { data } = $props();
     const persons = data.persons;
     
@@ -15,7 +16,7 @@
     {#each persons as person}
         <p>{person.name}</p>
     {/each}
-    <Dropdown />
+    <Banner />
     <Prevpage url="/terug" text="terug" />
     <Heading level={4} text="Groups" />
     <GroupView {persons} />
