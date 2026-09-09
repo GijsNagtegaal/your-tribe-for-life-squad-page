@@ -1,14 +1,18 @@
 <script>
-	import PlaylistSongs from "$lib/components/PlaylistSongs.svelte";
+	import Playlist from "$lib/components/Playlist.svelte";
 	let { data } = $props();
 </script>
 
 <main>
-	<PlaylistSongs persons={data.persons} />
+
+	<Playlist persons={data.persons} />
 </main>
 
 <style>
 	main {
+		scroll-timeline: --main-timeline;
+		overflow-y: auto;
 		padding: 1rem;
 	}
+	
 </style>

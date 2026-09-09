@@ -39,6 +39,7 @@ html{
 }
 
 body {
+    
     /* Kleuren deze NIET gebruiken alleen voor variabelen ===========*/
     /* Brand */
     --palette-brand-700:       #1DB954;
@@ -137,6 +138,7 @@ h4 { font-size:                var(--font-size-h4);}
 h5 { font-size:                var(--font-size-h5);}
 
 h1, h2, h3, h4, h5, h6 {
+    margin: 0;
     font-family: var(--font-primary);
     color: var(--text);
     font-weight: var(--font-weight-bold);
@@ -144,6 +146,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
+    margin: 0;
     font-size: var(--font-size-body-md);
     line-height: 1.6;
 }
