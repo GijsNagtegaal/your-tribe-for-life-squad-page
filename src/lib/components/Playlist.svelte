@@ -5,6 +5,8 @@
     import PlayingIcon from "./icons/PlayingIcon.svelte";
     import Prevpage from "./Prevpage.svelte";
     import Share from "./icons/Share.svelte";
+    import PlaylistImg from '$lib/assets/playlist2627.png';
+
 
     let { persons = [] } = $props();
     
@@ -78,13 +80,13 @@
     <Prevpage />
     
     <header>
-        <img src="src/lib/assets/playlist.png" alt="">
+        <img src="{PlaylistImg}" alt="">
         <h2>Playlist van jaar 26/27</h2>
         <p>Luister hier naar de favoriete muziek van studenten en docenten in het eerste jaar</p>
     </header>
 
     <section class="controls">
-        <menu>
+        <article>
             <span> 
                 <p>Playlist</p>
                 <Seperator size="0.3rem" />
@@ -94,7 +96,7 @@
                 <Share size="1rem" />
                 Delen
             </a>
-        </menu>
+        </article>
         {@render playButton()}
     </section>
 
@@ -157,11 +159,10 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
 
-            h2 {
-                margin: 0;
-                font-size: 1.25rem;
-            }
+        h2 {
+            font-size: var(--font-size-h4);
         }
     }
 
@@ -220,10 +221,20 @@
             margin-bottom: 2rem;
 
         img {
-                width: 50%;
+                margin-block: 2rem;
+                width: 60%;
                 align-self: center;
                 justify-self: center;
             }
+        }
+
+        h2 {
+            font-size: var(--font-size-h3);
+        }
+
+        p {
+            font-size: var(--font-size-body-s);
+            color: var(--color-neutral-mid);
         }
     }
 
@@ -233,7 +244,7 @@
         display: contents;
         color: var(--color-neutral-mid);
 
-        menu {
+        article {
             grid-column: 1;
             grid-row: 3;
             display: flex;
