@@ -10,8 +10,6 @@
 
 <style>
 	main {
-		scroll-timeline: --main-timeline;
-		overflow-y: auto;
 		padding: 1rem;
 		margin-bottom: 5rem;
 	}

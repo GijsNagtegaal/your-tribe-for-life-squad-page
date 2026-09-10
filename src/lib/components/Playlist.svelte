@@ -16,24 +16,6 @@
     let hoveredIndex = $state(null); 
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
-    let visibleTracks = $state(new Set());
-
-    function revealTrack(node, index) {
-        const revealIfVisible = () => {
-            const bounds = node.getBoundingClientRect();
-            const isVisible = bounds.top < window.innerHeight && bounds.bottom > 0;
-
-            if (isVisible) {
-                visibleTracks = new Set(visibleTracks).add(index);
-                window.removeEventListener("scroll", revealIfVisible);
-            }
-        };
-
-        revealIfVisible();
-        window.addEventListener("scroll", revealIfVisible, { passive: true });
-
-        return { destroy: () => window.removeEventListener("scroll", revealIfVisible) };
-    }
 
     let currentPerson = $derived(
         currentTrackIndex !== null ? persons[currentTrackIndex] : null
@@ -125,16 +107,15 @@
         {@render playButton()}
     </section>
 
-    <section class="tracks">
+    <ul class="tracks">
         {#each persons as person, index (person.id)}
-            <button 
-                use:revealTrack={index}
-                data-visible={visibleTracks.has(index)}
-                data-playing={currentTrackIndex === index} 
-                onclick={() => toggleAudio(index)}
-                onmouseenter={() => hoveredIndex = index} 
-                onmouseleave={() => hoveredIndex = null}
-            >
+            <li class="track">
+                <button 
+                    data-playing={currentTrackIndex === index} 
+                    onclick={() => toggleAudio(index)}
+                    onmouseenter={() => hoveredIndex = index} 
+                    onmouseleave={() => hoveredIndex = null}
+                >
                 <span>
                     <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
                         <PauseIcon />
@@ -165,9 +146,10 @@
                 
                 <a href="/studenten/{person.name}"></a>
                 <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
-            </button>
+                </button>
+            </li>
         {/each}
-    </section>
+    </ul>
 </article>
 
 <section class="miniplayer">
@@ -185,17 +167,6 @@
     {/if}
 </section>
 <style>
-    @keyframes fade-in {
-        from {
-            opacity: 0.1;
-            transform: scale(0.3);
-        }
-
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
 
     header.top-bar {
         position: fixed;
@@ -337,7 +308,7 @@
         }
     }
 
-    section.tracks {
+    ul.tracks {
         grid-column: 1 / span 2;
         grid-row: 4;
         display: flex;
@@ -435,13 +406,14 @@
         }
     }
 
-    section.tracks button {
-        opacity: 0;
-        transform: scale(0.3);
-    }
-
-    section.tracks button[data-visible="true"] {
-        animation: fade-in 600ms ease-out both;
+    ul.tracks .track {
+        width: 100%;
+        flex: 0 1 auto;
+        view-timeline-name: --track-entry;
+        view-timeline-axis: block;
+        animation: fade-in linear both;
+        animation-timeline: --track-entry;
+        animation-range: entry 40% cover 20%;
     }
 
     @keyframes slideDown {
@@ -456,4 +428,17 @@
             pointer-events: auto;
         }
     }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0.1;
+            transform: scale(0.3);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
 </style>
