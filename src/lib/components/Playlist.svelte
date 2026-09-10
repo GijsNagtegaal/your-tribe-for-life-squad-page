@@ -16,6 +16,24 @@
     let hoveredIndex = $state(null); 
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
+    let visibleTracks = $state(new Set());
+
+    function revealTrack(node, index) {
+        const revealIfVisible = () => {
+            const bounds = node.getBoundingClientRect();
+            const isVisible = bounds.top < window.innerHeight && bounds.bottom > 0;
+
+            if (isVisible) {
+                visibleTracks = new Set(visibleTracks).add(index);
+                window.removeEventListener("scroll", revealIfVisible);
+            }
+        };
+
+        revealIfVisible();
+        window.addEventListener("scroll", revealIfVisible, { passive: true });
+
+        return { destroy: () => window.removeEventListener("scroll", revealIfVisible) };
+    }
 
     let currentPerson = $derived(
         currentTrackIndex !== null ? persons[currentTrackIndex] : null
@@ -110,6 +128,8 @@
     <section class="tracks">
         {#each persons as person, index (person.id)}
             <button 
+                use:revealTrack={index}
+                data-visible={visibleTracks.has(index)}
                 data-playing={currentTrackIndex === index} 
                 onclick={() => toggleAudio(index)}
                 onmouseenter={() => hoveredIndex = index} 
@@ -165,6 +185,17 @@
     {/if}
 </section>
 <style>
+    @keyframes fade-in {
+        from {
+            opacity: 0.1;
+            transform: scale(0.3);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 
     header.top-bar {
         position: fixed;
@@ -403,6 +434,16 @@
             }
         }
     }
+
+    section.tracks button {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    section.tracks button[data-visible="true"] {
+        animation: fade-in 600ms ease-out both;
+    }
+
     @keyframes slideDown {
         0% {
             transform: translateX(-50%) translateY(-100%);
