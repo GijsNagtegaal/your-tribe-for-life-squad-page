@@ -432,12 +432,12 @@
     @keyframes fade-in {
         from {
             opacity: 0.1;
-            transform: scale(0.3);
+            transform: translateX(-100%);
         }
 
         to {
             opacity: 1;
-            transform: scale(1);
+            transform: translateX(0%);
         }
     }
 

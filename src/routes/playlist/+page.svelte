@@ -11,7 +11,7 @@
 <style>
 	main {
 		padding: 1rem;
-		margin-bottom: 5rem;
+		margin-bottom: 7rem;
 	}
 	
 </style>
