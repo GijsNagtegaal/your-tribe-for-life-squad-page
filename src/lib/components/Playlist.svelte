@@ -408,9 +408,6 @@
 
     ul.tracks .track {
         width: 100%;
-        flex: 0 1 auto;
-        view-timeline-name: --track-entry;
-        view-timeline-axis: block;
         animation: fade-in linear both;
         animation-timeline: --track-entry;
         animation-range: entry 40% cover 20%;
