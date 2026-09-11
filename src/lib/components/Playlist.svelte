@@ -253,9 +253,14 @@
 
         img {
                 margin-block: 2rem;
-                width: 60%;
+                width: 70%;
                 align-self: center;
                 justify-self: center;
+                animation-timeline: scroll(root);
+                animation-range: 0 100vh; 
+                animation-name: fadeout;
+                animation-fill-mode: forwards;
+                animation-timing-function: linear;
             }
         }
 
@@ -449,5 +454,17 @@
             transform: translateX(0%);
         }
     }
+    @keyframes fadeout {
+        from {
+            scale: 1;
+        }
+
+        to {
+            scale: 0;
+            transform: translateY(0%);
+            rotate: 50deg;
+        }
+    }
+    
 
 </style>
