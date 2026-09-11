@@ -5,18 +5,26 @@
     import PlayingIcon from "./icons/PlayingIcon.svelte";
     import Prevpage from "./Prevpage.svelte";
     import Share from "./icons/Share.svelte";
+    import Miniplayer from "./Miniplayer.svelte";
     import PlaylistImg from '$lib/assets/playlist2627.png';
-
 
     let { persons = [] } = $props();
     
     let audioElements = $state([]);
+    let currentTimes = $state([]);
+    let durations = $state([]);
     let hoveredIndex = $state(null); 
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
 
     let currentPerson = $derived(
         currentTrackIndex !== null ? persons[currentTrackIndex] : null
+    );
+
+    let timeLeft = $derived(
+        currentTrackIndex !== null && durations[currentTrackIndex]
+            ? durations[currentTrackIndex] - (currentTimes[currentTrackIndex] || 0)
+            : 0
     );
 
     function toggleAudio(index) {
@@ -58,7 +66,6 @@
         }
     }
 </script>
-
 <!-- good use of snippet element -->
 <!-- https://svelte.dev/docs/svelte/snippet -->
 {#snippet playButton()}
@@ -69,10 +76,8 @@
 {/snippet}
 
 <header class="top-bar">
-    <nav>
-        <Prevpage />
-        <h2>Playlist van jaar 26/27</h2>
-    </nav>
+    <Prevpage />
+    <h2>Playlist van jaar 26/27</h2>
     {@render playButton()}
 </header>
 
@@ -80,7 +85,7 @@
     <Prevpage />
     
     <header>
-        <img src="{PlaylistImg}" alt="">
+        <img src="{PlaylistImg}?width=300&height=300" alt="">
         <h2>Playlist van jaar 26/27</h2>
         <p>Luister hier naar de favoriete muziek van studenten en docenten in het eerste jaar</p>
     </header>
@@ -100,42 +105,65 @@
         {@render playButton()}
     </section>
 
-    <section class="tracks">
+    <ul class="tracks">
         {#each persons as person, index (person.id)}
-            <button 
-                data-playing={currentTrackIndex === index} 
-                onclick={() => toggleAudio(index)}
-                onmouseenter={() => hoveredIndex = index} 
-                onmouseleave={() => hoveredIndex = null}
-            >
-                <span>
-                    <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
-                        <PauseIcon />
-                    </i>
-                    <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
-                        <PlayingIcon />
-                    </i>
-                    <i data-active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
-                        <PlayIcon />
-                    </i>
-                    <i data-active={currentTrackIndex !== index && hoveredIndex !== index}>
-                        {index + 1}
-                    </i>
-                </span>
-                
-                {#if person.spotifyData}
-                    <h3>{person.spotifyData.name}</h3>
-                    <p>{person.spotifyData.artist}</p>
-                {/if}
-                
-                <audio bind:this={audioElements[index]} src={person.audioUrl} onended={() => playNext(index)}></audio>
-                <a href="/studenten/{person.name}"></a>
-                <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
-            </button>
+            <li class="track">
+                <button 
+                    style="--bg-color:{person.fav_color}3D"
+                    data-playing={currentTrackIndex === index} 
+                    onclick={() => toggleAudio(index)}
+                    onmouseenter={() => hoveredIndex = index} 
+                    onmouseleave={() => hoveredIndex = null}
+                >
+                    <span>
+                        <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
+                            <PauseIcon />
+                        </i>
+                        <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
+                            <PlayingIcon />
+                        </i>
+                        <i data-active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
+                            <PlayIcon />
+                        </i>
+                        <i data-active={currentTrackIndex !== index && hoveredIndex !== index}>
+                            {index + 1}
+                        </i>
+                    </span>
+                    
+                    {#if person.spotifyData}
+                        <h3>{person.spotifyData.name}</h3>
+                        <p>{person.spotifyData.artist}</p>
+                    {/if}
+                    
+                    <audio 
+                        bind:this={audioElements[index]} 
+                        bind:currentTime={currentTimes[index]} 
+                        bind:duration={durations[index]}
+                        src={person.audioUrl} 
+                        onended={() => playNext(index)}>
+                    </audio>
+        
+                    <img src="https://fdnd.directus.app/assets/{person.mugshot}?width=100&height=100" fetchpriority="high" alt="">
+                </button>
+            </li>
         {/each}
-    </section>
+    </ul>
 </article>
 
+<section class="miniplayer">
+    {#if currentPerson}
+        <Miniplayer 
+            songName={currentPerson.spotifyData?.name}
+            artist={currentPerson.spotifyData?.artist}
+            mugshot={currentPerson.mugshot}
+            favcolor={currentPerson.fav_color}
+            currentTime={currentTimes[currentTrackIndex] || 0}
+            duration={durations[currentTrackIndex] || 0}
+            isPlaying={isPlaying} 
+            togglePlayback={togglePlaylist} 
+        />
+    {/if}
+</section>
 <style>
 
     header.top-bar {
@@ -147,23 +175,24 @@
         padding: 0.75rem 1rem;
         background: var(--background-color, #121212);
         z-index: 100;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 15% 70% 15%;
+        grid-template-rows: 1fr;
         box-sizing: border-box;
     
         animation: slideDown linear both;
         animation-timeline: scroll(root block);
         animation-range: 200px 400px;
 
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        a {
+            grid-column: 1;
         }
 
         h2 {
             font-size: var(--font-size-h4);
+            grid-column: 2;
+            justify-self: center;
+            align-self: center;
         }
     }
 
@@ -180,6 +209,7 @@
         padding: 0;
         cursor: pointer;
         position: relative;
+        grid-column: 3;
 
         i {
             position: absolute;
@@ -223,9 +253,14 @@
 
         img {
                 margin-block: 2rem;
-                width: 60%;
+                width: 70%;
                 align-self: center;
                 justify-self: center;
+                animation-timeline: scroll(root);
+                animation-range: 0 100vh; 
+                animation-name: fadeout;
+                animation-fill-mode: forwards;
+                animation-timing-function: linear;
             }
         }
 
@@ -278,12 +313,13 @@
         }
     }
 
-    section.tracks {
+    ul.tracks {
         grid-column: 1 / span 2;
         grid-row: 4;
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        padding: 0;
 
         button {
             all: unset;
@@ -294,18 +330,35 @@
             width: 100%;
             padding: 0.5rem 0;
             cursor: pointer;
+            border-radius: var(--border-radius-sm);
+
+            &:focus {
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
+            }
 
             &:focus-visible {
-                border: 2px solid var(--color-brand-dark);
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
+            }
+
+            &:focus-within {
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
             }
 
             &:hover {
-                background-color: var(--color-neutral-dark);
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
             }
 
-            &[data-playing="true"] h3 {
-                color: var(--color-brand-mid);
-            }
+            &[data-playing="true"] {
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
+                h3 {
+                    color: var(--color-brand-mid);
+                }
+            } 
 
             span { 
                 position: relative;
@@ -370,6 +423,13 @@
         }
     }
 
+    ul.tracks .track {
+        width: 100%;
+        animation: fade-in linear both;
+        animation-timeline: --track-entry;
+        animation-range: entry 40% cover 20%;
+    }
+
     @keyframes slideDown {
         0% {
             transform: translateX(-50%) translateY(-100%);
@@ -382,4 +442,29 @@
             pointer-events: auto;
         }
     }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0.1;
+            transform: translateX(-100%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+    @keyframes fadeout {
+        from {
+            scale: 1;
+        }
+
+        to {
+            scale: 0;
+            transform: translateY(0%);
+            rotate: 50deg;
+        }
+    }
+    
+
 </style>
