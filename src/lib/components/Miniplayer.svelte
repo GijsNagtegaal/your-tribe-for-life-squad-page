@@ -44,12 +44,10 @@
 
 aside {
     display: flex;
-    width: 95%;
+    width: 93%;
     position: fixed;
     bottom: 5rem;
     padding: 0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: var(--bg-color);
     backdrop-filter: blur(20px);
     border-radius: var(--border-radius-sm);
@@ -136,11 +134,11 @@ progress::-webkit-progress-value {
 @keyframes slideInMiniplayer {
     0% {
         opacity: 0;
-        transform: translateX(calc(-50% - 100%));
+        transform: translateY( 100%);
     }
     100% {
         opacity: 1;
-        transform: translateX(-50%);
+        transform: translateY(0%);
     }
 }
 </style>

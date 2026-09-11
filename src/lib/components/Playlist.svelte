@@ -111,41 +111,41 @@
         {#each persons as person, index (person.id)}
             <li class="track">
                 <button 
+                    style="--bg-color:{person.fav_color}3D"
                     data-playing={currentTrackIndex === index} 
                     onclick={() => toggleAudio(index)}
                     onmouseenter={() => hoveredIndex = index} 
                     onmouseleave={() => hoveredIndex = null}
                 >
-                <span>
-                    <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
-                        <PauseIcon />
-                    </i>
-                    <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
-                        <PlayingIcon />
-                    </i>
-                    <i data-active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
-                        <PlayIcon />
-                    </i>
-                    <i data-active={currentTrackIndex !== index && hoveredIndex !== index}>
-                        {index + 1}
-                    </i>
-                </span>
-                
-                {#if person.spotifyData}
-                    <h3>{person.spotifyData.name}</h3>
-                    <p>{person.spotifyData.artist}</p>
-                {/if}
-                
-                <audio 
-                    bind:this={audioElements[index]} 
-                    bind:currentTime={currentTimes[index]} 
-                    bind:duration={durations[index]}
-                    src={person.audioUrl} 
-                    onended={() => playNext(index)}>
-                </audio>
-                
-                <a href="/studenten/{person.name}"></a>
-                <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
+                    <span>
+                        <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex === index}>
+                            <PauseIcon />
+                        </i>
+                        <i data-active={currentTrackIndex === index && isPlaying && hoveredIndex !== index}>
+                            <PlayingIcon />
+                        </i>
+                        <i data-active={(!isPlaying && currentTrackIndex === index) || (hoveredIndex === index && currentTrackIndex !== index)}>
+                            <PlayIcon />
+                        </i>
+                        <i data-active={currentTrackIndex !== index && hoveredIndex !== index}>
+                            {index + 1}
+                        </i>
+                    </span>
+                    
+                    {#if person.spotifyData}
+                        <h3>{person.spotifyData.name}</h3>
+                        <p>{person.spotifyData.artist}</p>
+                    {/if}
+                    
+                    <audio 
+                        bind:this={audioElements[index]} 
+                        bind:currentTime={currentTimes[index]} 
+                        bind:duration={durations[index]}
+                        src={person.audioUrl} 
+                        onended={() => playNext(index)}>
+                    </audio>
+        
+                    <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
                 </button>
             </li>
         {/each}
@@ -314,6 +314,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        padding: 0;
 
         button {
             all: unset;
@@ -326,21 +327,32 @@
             cursor: pointer;
             border-radius: var(--border-radius-sm);
 
+            &:focus {
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
+            }
+
             &:focus-visible {
-                border: 2px solid var(--color-brand-dark);
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
+            }
+
+            &:focus-within {
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
             }
 
             &:hover {
-                background-color: var(--color-neutral-dark);
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
             }
 
             &[data-playing="true"] {
-                background-color: var(--color-neutral-dark);
+                background-color: var(--bg-color);
+                backdrop-filter: blur(20px);
                 h3 {
                     color: var(--color-brand-mid);
                 }
-
-
             } 
 
             span { 
