@@ -85,7 +85,7 @@
     <Prevpage />
     
     <header>
-        <img src="{PlaylistImg}" alt="">
+        <img src="{PlaylistImg}?width=300&height=300" alt="">
         <h2>Playlist van jaar 26/27</h2>
         <p>Luister hier naar de favoriete muziek van studenten en docenten in het eerste jaar</p>
     </header>
@@ -143,7 +143,7 @@
                         onended={() => playNext(index)}>
                     </audio>
         
-                    <img src="https://fdnd.directus.app/assets/{person.mugshot}?width=200&height=200" fetchpriority="high" alt="">
+                    <img src="https://fdnd.directus.app/assets/{person.mugshot}?width=100&height=100" fetchpriority="high" alt="">
                 </button>
             </li>
         {/each}
