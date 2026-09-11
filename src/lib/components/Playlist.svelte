@@ -76,10 +76,8 @@
 {/snippet}
 
 <header class="top-bar">
-    <nav>
-        <Prevpage />
-        <h2>Playlist van jaar 26/27</h2>
-    </nav>
+    <Prevpage />
+    <h2>Playlist van jaar 26/27</h2>
     {@render playButton()}
 </header>
 
@@ -145,7 +143,7 @@
                         onended={() => playNext(index)}>
                     </audio>
         
-                    <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
+                    <img src="https://fdnd.directus.app/assets/{person.mugshot}?width=200&height=200" fetchpriority="high" alt="">
                 </button>
             </li>
         {/each}
@@ -177,23 +175,24 @@
         padding: 0.75rem 1rem;
         background: var(--background-color, #121212);
         z-index: 100;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 15% 70% 15%;
+        grid-template-rows: 1fr;
         box-sizing: border-box;
     
         animation: slideDown linear both;
         animation-timeline: scroll(root block);
         animation-range: 200px 400px;
 
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        a {
+            grid-column: 1;
         }
 
         h2 {
             font-size: var(--font-size-h4);
+            grid-column: 2;
+            justify-self: center;
+            align-self: center;
         }
     }
 
@@ -210,6 +209,7 @@
         padding: 0;
         cursor: pointer;
         position: relative;
+        grid-column: 3;
 
         i {
             position: absolute;
