@@ -18,7 +18,7 @@
         display: flex;
         align-items: center;
         height: 69px;
-        padding: 0 29px;
+        padding: var(--spacing-md);
 
         figure {
             width: 51px;

@@ -23,5 +23,24 @@
 </section>
 
 <style>
-   
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing-md);
+
+        p {
+            margin: 7px auto 0;
+            font-size: var(--font-size-body-xs);
+            text-align: center;
+            width: auto;
+        }
+
+        @media (min-width: 368px) {
+            p {
+                width: 60vw;
+            }
+        }
+    }
 </style>
