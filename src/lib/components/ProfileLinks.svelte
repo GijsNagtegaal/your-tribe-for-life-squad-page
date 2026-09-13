@@ -2,7 +2,7 @@
     let { person } = $props();
 
     let githubUrl = $derived.by(() => {
-        const githubHandle = person?.github_handle?.trim() || person?.github_handel?.trim();
+        const githubHandle = person?.github_handle?.trim();
 
         if (!githubHandle) return null;
         if (githubHandle.startsWith('http://') || githubHandle.startsWith('https://')) {
@@ -17,7 +17,7 @@
     {#if person}
         <h4>Linkjes</h4>
             <ul>
-            {#if githubUrl}
+            {#if person?.github_handle}
                 <li>
                     <a class="link github" href={githubUrl}>
 
