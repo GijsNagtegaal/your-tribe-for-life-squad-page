@@ -54,5 +54,74 @@
 </section>
 
 <style>
-  
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        width: 100vw;
+        max-width: 500px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        padding: var(--spacing-md);
+
+        ul {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--spacing-md);
+            margin: 0 ;
+            padding: 0;
+
+            li {
+                text-align: center;
+          
+            .link {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 2px var(--spacing-md);
+                border-radius: var(--border-radius-sm);
+                text-decoration: none;
+                color: var(--text);
+                
+                transition:
+                    transform 150ms ease;
+
+
+                &:hover {
+                    transform: translateY(-2px);
+                }
+                @media (max-width: 300px) {
+                    .icon {
+                        display: none;
+                    }
+                }
+                @media (max-width: 230px) {
+                    .arrow {
+                        display: none;
+                    }
+                }
+            }
+
+            .github {
+                background: #3474df;
+            }
+
+            .website {
+                background: #d9411e;
+            }
+
+            .icon {
+                margin-left: var(--spacing-xs);
+                font-size: 1.4em;
+                font-weight: var(--font-weight-regular);
+                vertical-align: -0.08em;
+            }
+
+            .arrow {
+                font-size: 2rem;
+                line-height: 0.5;
+            }
+        }
+        }
+    }
 </style>
