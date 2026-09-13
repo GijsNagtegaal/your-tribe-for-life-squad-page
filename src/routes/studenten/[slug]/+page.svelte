@@ -3,6 +3,7 @@
     import ProfileImage from "$lib/components/ProfileImage.svelte";
     import ProfileHeading from "$lib/components/ProfileHeading.svelte";
     import ProfileDetails from "$lib/components/ProfileDetails.svelte";
+    import ProfileLinks from "$lib/components/ProfileLinks.svelte";
 
     let { data } = $props();
     let person = $derived(data.person);
@@ -12,6 +13,7 @@
     <ProfileImage {person} />
     <ProfileHeading {person} />
     <ProfileDetails {person} />
+    <ProfileLinks {person} />
 </main>
 
 
