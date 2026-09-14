@@ -150,10 +150,10 @@
 
         &::before {
             position: absolute;
-            right: -28px;
-            bottom: -48px;
-            width: 130px;
-            height: 125px;
+            right: -10px;
+            bottom: 0px;
+            width: 100px;
+            height: 80px;
             transform: rotate(20deg);
             background: #1d1d20;
             box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
