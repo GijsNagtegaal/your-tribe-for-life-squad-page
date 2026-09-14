@@ -1,7 +1,7 @@
 <script>
     import Miniplayer from "./Miniplayer.svelte";
     import PlayIcon from "./icons/PlayIcon.svelte";
-    import PlayingIcon from "./icons/PlayingIcon.svelte";
+    import PlayingIconV2 from "./icons/PlayingIconV2.svelte";
 
     let { person } = $props();
 
@@ -10,18 +10,6 @@
     let durations = $state([]);
     let currentTrackIndex = $state(null);
     let isPlaying = $state(false);
-
-    let favoriteWidgets = $derived([
-        { label: "Hobby", value: person?.fav_hobby, color: "#91a653" },
-        { label: "Emoji", value: person?.fav_emoji, color: "#293d78" },
-        { label: "Woonplaats", value: person?.residency, color: "#649958" },
-        {
-            label: "Liedje",
-            value: person?.spotifyData?.name || person?.fav_song,
-            color: "#8c6bad",
-            song: true,
-        },
-    ]);
 
     function toggleAudio(index) {
         const selectedAudio = audioElements[index];
@@ -60,54 +48,49 @@
     <section>
         <h4>Favoriete</h4>
         <ul>
-            {#each favoriteWidgets as widget}
-                <li
-                    class="favorite-card"
-                    style={`--widget-color: ${widget.color}`}
-                >
-                    <h4>{widget.label}</h4>
-                    {#if widget.song}
-                        <p class="song-name">{widget.value || "Onbekend"}</p>
-                        {#if person?.audioUrl}
-                            <button
-                                class="song-control"
-                                data-playing={currentTrackIndex === 0}
-                                onclick={() => toggleAudio(0)}
-                                aria-label={isPlaying
-                                    ? "Pauzeer liedje"
-                                    : "Speel liedje"}>
-                                <i data-active={isPlaying}>
-                                    <PlayingIcon color="currentColor" />
-                                </i>
-                                <i data-active={!isPlaying}>
-                                    <PlayIcon size="2rem" />
-                                </i>
-                            </button>
-                            <audio
-                                bind:this={audioElements[0]}
-                                bind:currentTime={currentTimes[0]}
-                                bind:duration={durations[0]}
-                                src={person.audioUrl}
-                                onended={stopFavoriteSong}
-                            ></audio>
-                        {/if}
-                    {:else if widget.label === "Hobby"}
-                        <p>{widget.value || "Onbekend"}</p>
-                        <span class="card-emoji">🧩</span>
-                    {:else if widget.label === "Emoji"}
-                        <span class="card-emoji">{widget.value || "🙂"}</span>
-                    {:else if widget.label === "Woonplaats"}
-                        <p>{widget.value || "Onbekend"}</p>
-                        <span class="card-emoji">📍</span>
-                    {:else}
-                        <p>{widget.value || "Onbekend"}</p>
-                    {/if}
-                </li>
-            {/each}
+            <li class="favorite-card hobby-card" style="--widget-color: #91a653">
+                <h4>Hobby</h4>
+                <p>{person?.fav_hobby || "Onbekend"}</p>
+                <span class="card-emoji">🧩</span>
+            </li>
+            <li class="favorite-card emoji-card" style="--widget-color: #293d78">
+                <h4>Emoji</h4>
+                <span class="card-emoji">{person?.fav_emoji || "🙂"}</span>
+            </li>
+            <li class="favorite-card residency-card" style="--widget-color: #649958">
+                <h4>Woonplaats</h4>
+                <p>{person?.residency || "Onbekend"}</p>
+                <span class="card-emoji">📍</span>
+            </li>
+            <li class="favorite-card song-card" style="--widget-color: #8c6bad">
+                <h4>Liedje</h4>
+                <p class="song-name">{person?.spotifyData?.name || person?.fav_song || "Onbekend"}</p>
+                {#if person?.audioUrl}
+                    <button
+                        class="song-control"
+                        data-playing={currentTrackIndex === 0}
+                        onclick={() => toggleAudio(0)}
+                        aria-label={isPlaying ? "Pauzeer liedje" : "Speel liedje"}>
+                        <i data-active={isPlaying}>
+                            <PlayingIconV2 color="#1d1d20" />
+                        </i>
+                        <i data-active={!isPlaying}>
+                            <PlayIcon size="2rem" />
+                        </i>
+                    </button>
+                    <audio
+                        bind:this={audioElements[0]}
+                        bind:currentTime={currentTimes[0]}
+                        bind:duration={durations[0]}
+                        src={person.audioUrl}
+                        onended={stopFavoriteSong}
+                    ></audio>
+                {/if}
+            </li>
         </ul>
     </section>
 
-    {#if person?.audioUrl && favoriteWidgets[3].value && currentTrackIndex !== null}
+    {#if person?.audioUrl && (person?.spotifyData?.name || person?.fav_song) && currentTrackIndex !== null}
         <Miniplayer
             songName={person.spotifyData?.name || person.fav_song}
             artist={person.spotifyData?.artist}
@@ -164,6 +147,7 @@
         overflow: hidden;
         padding: var(--spacing-md);
         background: var(--widget-color);
+        color: #fff;
 
         &::before {
             position: absolute;
