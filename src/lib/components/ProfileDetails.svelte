@@ -52,8 +52,8 @@
         ul {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            width: 100vw;
-            margin: 16px 6px 0;
+            width: min(100%, 468px);
+            margin: 16px 0 16px 0;
             padding: 0;
             list-style: none;
 
@@ -102,10 +102,6 @@
                     font-weight: var(--font-weight-regular);
                     
                 }
-            }
-
-            @media (min-width: 400px) {
-                width: 400px;
             }
         }
     }
