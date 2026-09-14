@@ -147,14 +147,13 @@
         overflow: hidden;
         padding: var(--spacing-md);
         background: var(--widget-color);
-        color: #fff;
 
         &::before {
             position: absolute;
             right: -28px;
             bottom: -48px;
             width: 130px;
-            height: 130px;
+            height: 125px;
             transform: rotate(20deg);
             background: #1d1d20;
             box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
