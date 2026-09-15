@@ -1,4 +1,7 @@
 <script>
+    //https://svelte.dev/docs/svelte/transition
+    import { fade } from 'svelte/transition';
+    import { flip } from 'svelte/animate'
     import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
     
     let { persons } = $props();
@@ -9,6 +12,13 @@
             person.name.toLowerCase().includes(searchTerm.toLowerCase())    
         )
     );
+
+    function getProfilePath(person) {
+        const isTeacher = person.role?.some(({ role_id }) => role_id?.name !== 'student');
+        const profileType = isTeacher ? 'docenten' : 'studenten';
+
+        return `/${profileType}/${person.slug}`;
+    }
 </script>
 
 <search>
@@ -20,19 +30,27 @@
     </form>
 </search>
 
-<section class="searchResults">
-    <h3>Resultaten voor "{searchTerm}"</h3>
-    <ul>
-        {#each results as person}
-            <li>
-                <a href="/"> <!--Dit moet anders !-->
-                    <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
-                    <p>{person.name}</p>
-                </a>
-            </li>
-        {/each}
-    </ul>
-</section>
+{#if searchTerm}
+    <section class="searchResults" transition:fade>
+        {#if results.length > 0}
+        <h3>Resultaten voor "{searchTerm}"</h3>
+            <ul>
+                {#each results as person (person.id)}
+                    <li animate:flip>
+                        <a href={getProfilePath(person)}>
+                            <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
+                            <p>{person.name}</p>
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+            {:else}
+            <p>Geen zoekresultaten gevonden voor "{searchTerm}"</p>
+        {/if}
+    </section>
+    {:else}
+    <p>Typ een naam om te zoeken</p>
+{/if}
 
 <style>
     form{
