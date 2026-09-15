@@ -17,12 +17,11 @@
     article {
         display: flex;
         align-items: center;
-        height: 69px;
-        padding: var(--spacing-md);
+        height: 4.3125rem;
 
         figure {
-            width: 51px;
-            height: 51px;
+            width: 3.1875rem;
+            height: 3.1875rem;
             margin: 0;
             flex-shrink: 0;
 
@@ -34,10 +33,11 @@
                 border-radius: var(--border-radius-xs);
             }
         }
+        
         header {
-            margin-left: 10px;
+            margin-left: 0.625rem;
 
-             p {
+            p {
                 margin: 0;
                 color: var(--color-neutral-dark);
                 font-size: var(--font-size-body-xs);

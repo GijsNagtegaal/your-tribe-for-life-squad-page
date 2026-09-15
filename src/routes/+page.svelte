@@ -17,20 +17,16 @@
 
 <main>
     <TeacherCarrousel {teachers} />
-
-    {#each persons as person}
-        <p>{person.name}</p>
-    {/each}
-
     <Dropdown />
     <Banner />
-  
-    <Prevpage url="/terug" text="terug" />
-    <Heading level={4} text="Groups" />
-    <GroupView {persons} />
+    <Heading level={3} text="Leerjaren" />
     <YearCards />
+    <Heading level={3} text="Groups" />
+    <GroupView {persons} />
 </main>
 
 <style>
-
+    main {
+        margin: 1rem;
+    }
 </style>
