@@ -1,6 +1,7 @@
 <script>
     import ProfileImage from '$lib/components/ProfileImage.svelte'
     import ProfileHeading from '$lib/components/ProfileHeading.svelte'
+    import PlayIcon from "$lib/components/icons/PlayIcon.svelte";
 
     let { persons } = $props();
 </script>
@@ -10,7 +11,12 @@
     {#each persons as person}
         <li>
             <a href="/studenten/{person.slug}">
-                <ProfileImage person={person}/>
+                <div class="image-wrapper">
+                    <ProfileImage person={person}/>
+                    <span class="play">
+                        <PlayIcon />
+                    </span>
+                </div>
                 <h4>{person.name}</h4>
             </a>
         </li>
@@ -29,16 +35,6 @@
         margin: 0 auto;
         max-width: 1000px;
         padding: var(--spacing-md);
-
-        li{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            h4{
-                padding: var(--spacing-md);
-            }
-        }
 
         &::before{
             content: "";
@@ -73,5 +69,42 @@
         }
     }
    
-    
+    .image-wrapper{
+        position: relative;
+    }
+
+    li{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: var(--spacing-md) 0;
+        h4{
+            padding: var(--spacing-md);
+            }
+        &:hover .play, &:focus-within .play{
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .play{
+        position: absolute;
+        display: flex;
+        bottom: 0rem;
+        right: 6rem;
+
+        justify-content: center;
+        padding: var(--spacing-sm);    
+        aspect-ratio: 1;
+        border-radius: var(--border-radius-circle);
+        background-color: var(--color-brand-dark);
+        color: var(--color-neutral-darkest);
+        box-shadow: 4px 4px 4px color-mix(in srgb, var(--color-neutral-darkest) 50%, transparent);
+        transform: translateY(100%);
+        opacity: 0;
+        @media (prefers-reduced-motion: no-preference) {
+            transition:transform 0.3s ease, opacity 0.3s ease;
+        }
+    }
 </style>
