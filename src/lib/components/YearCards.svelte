@@ -5,7 +5,7 @@
 
 <section>
   <article>
-    <a href="/playlist/jaar1">
+    <a href="/studenten/25-26">
       <img src={jaar1} alt="Jaar 1" />
       <span>Jaar 1</span>
     </a>
@@ -17,7 +17,7 @@
   </article>
 
   <article>
-    <a href="/playlist/jaar2">
+    <a href="/studenten/26-27">
       <img src={jaar2} alt="Jaar 2" />
       <span>Jaar 2</span>
     </a>
