@@ -2,26 +2,18 @@
 name: Component
 about: Component
 title: "[Component]"
-labels: ''
+labels: Component
 assignees: ''
 
 ---
 
-## Component name
+Naam van het Component:
 
- ## Description
+Beschrijving van het Component:
 
- ## User story
-"Als [gebruiker], wil ik [functionaliteit], zodat [doel]"
+[Index]
 
-## Index
-
- [*]() "bvb: Design, UI states, screenshots van design ontwikkeling, taken, goed om te weten voor teamleden"
- [*]()
- [*]()
- [*]()
-
- ## Sources
- [*]() "Vermeld hier je bronnen met linkjes"
- [*]()
- [*]()
+[*]()
+[*]()
+[*]()
+[*]()
