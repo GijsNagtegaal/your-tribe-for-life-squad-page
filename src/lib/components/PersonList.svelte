@@ -10,7 +10,7 @@
     {#each persons as person}
         <li>
             <a href="/studenten/{person.slug}">
-                <ProfileImage />
+                <ProfileImage person={person}/>
                 <h4>{person.name}</h4>
             </a>
         </li>
