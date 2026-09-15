@@ -1,9 +1,6 @@
 <script>
      let { person } = $props();
      const invalidBioCharacters = /[<?>{}]/;
-
-     console.log(person);
-     
 </script>
 
     
