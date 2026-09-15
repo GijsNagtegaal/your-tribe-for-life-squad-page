@@ -9,6 +9,13 @@
             person.name.toLowerCase().includes(searchTerm.toLowerCase())    
         )
     );
+
+    function getProfilePath(person) {
+        const isTeacher = person.role?.some(({ role_id }) => role_id?.name !== 'student');
+        const profileType = isTeacher ? 'docenten' : 'studenten';
+
+        return `/${profileType}/${person.slug}`;
+    }
 </script>
 
 <search>
@@ -25,7 +32,7 @@
     <ul>
         {#each results as person}
             <li>
-                <a href="/"> <!--Dit moet anders !-->
+                <a href={getProfilePath(person)}>
                     <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
                     <p>{person.name}</p>
                 </a>
