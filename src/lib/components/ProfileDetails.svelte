@@ -41,7 +41,9 @@
                      </h4>
                         <span>role</span>
                     {:else}
+                     <h4>
                         <a href={person?.team_s13 || '#'}>{person?.team_s13 || 'Onbekend'}</a>
+                     </h4>
                         <span>team</span>
                     {/if}
                
