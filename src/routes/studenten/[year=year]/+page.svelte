@@ -15,8 +15,10 @@
 <ul>
     {#each students as student}
         <li>
-            <ProfileImage person={student} />
-            <h4>{student.name}</h4>
+            <a href="/studenten/{student.slug}">
+                <ProfileImage person={student} />
+                <h4>{student.name}</h4>
+            </a>
         </li>
     {/each}
 </ul>
