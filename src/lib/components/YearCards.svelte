@@ -33,7 +33,6 @@
   section {
     display: flex;
     flex-wrap: nowrap;
-    margin: 1rem;
     gap: 1.5rem;
   }
 
@@ -44,16 +43,17 @@
     vertical-align: top;
     max-width: 300px;
 
-    h2,
-    p {
+    h2, p {
       grid-area: 2 / 1;
       margin: 0 0 12px;
+      padding-block: 1rem;
     }
 
     h2 {
-      display: block;
+      font-size: var(--font-size-h4);
       font-weight: var(--font-weight-medium);
       opacity: 1;
+      
 
       transition: opacity 0.25s ease;
     }

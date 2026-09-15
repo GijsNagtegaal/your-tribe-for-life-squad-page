@@ -53,7 +53,6 @@
     section {
         display: flex;
         overflow-x: auto;
-        margin: 1rem;
         gap: 3rem;
     }
 
