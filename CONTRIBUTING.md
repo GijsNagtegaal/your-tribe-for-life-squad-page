@@ -7,6 +7,7 @@ In de index van een issue plaats je een link naar de verschillende onderdelen/co
 Neem in ieder geval de volgende onderdelen op in je issue:
 
 Beschrijving
+User story
 Ontwerp
 Assignee
 Label
@@ -18,6 +19,7 @@ Wanneer er meerdere versies van een component worden gemaakt, vermeld je het ver
 
 Voor ieder component wordt een aparte branch aangemaakt.
 Gebruik één branch per component.
+De branch naam is het issue nummer de naam van het component en eventueel versienummer.
 
 ## Commit messages
 
@@ -50,6 +52,8 @@ Code comments
 Commit messages
 Gebruik 4 spaties / 1 tab voor indentation.
 Gebruik waar mogelijk semantische HTML. Vermijd het onnodig gebruiken van `<div>`'jes
+
+alle mappen en files svelte met hoofdletter !
 
 GEEN AI-GENERATED CODE PUSHEN.
 
