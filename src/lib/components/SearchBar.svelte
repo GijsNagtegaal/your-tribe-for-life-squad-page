@@ -1,4 +1,7 @@
 <script>
+    //https://svelte.dev/docs/svelte/transition
+    import { fade } from 'svelte/transition';
+    import { flip } from 'svelte/animate'
     import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
     
     let { persons } = $props();
@@ -28,12 +31,12 @@
 </search>
 
 {#if searchTerm}
-    <section class="searchResults">
+    <section class="searchResults" transition:fade>
         {#if results.length > 0}
         <h3>Resultaten voor "{searchTerm}"</h3>
             <ul>
-                {#each results as person}
-                    <li>
+                {#each results as person (person.id)}
+                    <li animate:flip>
                         <a href={getProfilePath(person)}>
                             <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
                             <p>{person.name}</p>
