@@ -27,19 +27,27 @@
     </form>
 </search>
 
-<section class="searchResults">
-    <h3>Resultaten voor "{searchTerm}"</h3>
-    <ul>
-        {#each results as person}
-            <li>
-                <a href={getProfilePath(person)}>
-                    <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
-                    <p>{person.name}</p>
-                </a>
-            </li>
-        {/each}
-    </ul>
-</section>
+{#if searchTerm}
+    <section class="searchResults">
+        {#if results.length > 0}
+        <h3>Resultaten voor "{searchTerm}"</h3>
+            <ul>
+                {#each results as person}
+                    <li>
+                        <a href={getProfilePath(person)}>
+                            <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
+                            <p>{person.name}</p>
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+            {:else}
+            <p>Geen zoekresultaten gevonden voor "{searchTerm}"</p>
+        {/if}
+    </section>
+    {:else}
+    <p>Typ een naam om te zoeken</p>
+{/if}
 
 <style>
     form{
