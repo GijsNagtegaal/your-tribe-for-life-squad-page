@@ -9,7 +9,8 @@
     let { data } = $props();
     let person = $derived(data.person);
 </script>
-<main>
+
+<main style="--fav-color: {person?.fav_color || 'transparent'};">
     <Prevpage />
     <ProfileImage {person} />
     <ProfileHeading {person} />
@@ -21,7 +22,14 @@
 
 <style>
     main {
-        margin: 1rem;
+        padding: 1rem;
         padding-bottom: 9rem;
+        min-height: 100vh;
+        
+        background: linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--fav-color) 24%, transparent),
+            transparent 60%
+        );
     }
 </style>    

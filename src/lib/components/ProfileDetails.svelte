@@ -1,5 +1,5 @@
 <script>
-    let { person } = $props();
+    let { person, isTeacher = false} = $props();
 
     function getAge(birthdate) {
         if (!birthdate) return null;
@@ -34,8 +34,19 @@
                 <span>leeftijd</span>
             </li>
             <li>
-                <h4><a href={person?.team_s13 || '#'}>{person?.team_s13 || 'Onbekend'}</a></h4>
-                <span>team</span>
+               
+                    {#if isTeacher === true}
+                     <h4>
+                        <a href="/docenten/25-26">Docent</a>
+                     </h4>
+                        <span>role</span>
+                    {:else}
+                     <h4>
+                        <a href="/studenten/25-26">{person?.team_s13 || 'Onbekend'}</a>
+                     </h4>
+                        <span>team</span>
+                    {/if}
+               
             </li>
         </ul>
     {/if}
