@@ -31,6 +31,7 @@
         bottom: 0;
         left: 0;
         padding-block: 0.5rem;
+        z-index: 999;
 
         a {
             display: flex;
