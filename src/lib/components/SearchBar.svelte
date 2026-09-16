@@ -3,6 +3,7 @@
     import { fade } from 'svelte/transition';
     import { flip } from 'svelte/animate'
     import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
+    import PersonSquare from './PersonSquare.svelte';
     
     let { persons } = $props();
 
@@ -38,7 +39,9 @@
                 {#each results as person (person.id)}
                     <li animate:flip>
                         <a href={getProfilePath(person)}>
-                            <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="foto van {person.name}">
+                            <span class="image-wrapper">
+                                <PersonSquare {person}/>
+                            </span>
                             <p>{person.name}</p>
                         </a>
                     </li>
@@ -110,11 +113,9 @@
         a{
             display: flex;
             gap: var(--spacing-md);
-            img{
-                width: 8rem;
-                aspect-ratio: 1/1;
-                object-fit: cover;
-            } 
+            .image-wrapper{
+                width: 12rem;
+            }
         }
     }
 </style>
