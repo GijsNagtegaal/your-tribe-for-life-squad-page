@@ -28,13 +28,22 @@
     ul{
         position: relative;
         display: grid;
-        /*https://css-tricks.com/books/greatest-css-tricks/flexible-grids/*/
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         row-gap: var(--spacing-md);
         padding: 0;
         margin: 0 auto;
-        max-width: 1000px;
+        max-width: 1200px;
         padding: var(--spacing-md);
+
+        @media (min-width: 700px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (min-width: 900px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (min-width: 1200px) {
+            grid-template-columns: repeat(5, 1fr);
+        }
 
         &::before{
             content: "";
@@ -71,6 +80,8 @@
    
     .image-wrapper{
         position: relative;
+        width: fit-content;
+        margin: 0 auto;
     }
 
     li{
@@ -92,7 +103,7 @@
         position: absolute;
         display: flex;
         bottom: 0rem;
-        right: 6rem;
+        right: 0.8rem;
 
         justify-content: center;
         padding: var(--spacing-sm);    
