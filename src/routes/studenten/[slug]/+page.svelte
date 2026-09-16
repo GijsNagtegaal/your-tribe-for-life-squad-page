@@ -1,32 +1,35 @@
 <script>
-    import Navbar from "$lib/components/Navbar.svelte";
     import Prevpage from "$lib/components/Prevpage.svelte";
+    import ProfileImage from "$lib/components/ProfileImage.svelte";
+    import ProfileHeading from "$lib/components/ProfileHeading.svelte";
+    import ProfileDetails from "$lib/components/ProfileDetails.svelte";
+    import ProfileLinks from "$lib/components/ProfileLinks.svelte";
+    import ProfileWidgets from "$lib/components/ProfileWidgets.svelte";
 
     let { data } = $props();
-    let { person } = data;
+    let person = $derived(data.person);
 </script>
-<main>
+
+<main style="--fav-color: {person?.fav_color || 'transparent'};">
     <Prevpage />
-    <section>
-        <img src="https://fdnd.directus.app/assets/{person.mugshot}" alt="">
-    </section>
+    <ProfileImage {person} />
+    <ProfileHeading {person} />
+    <ProfileDetails {person} />
+    <ProfileLinks {person} />
+    <ProfileWidgets {person} />
 </main>
 
 
 <style>
-    section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    main {
+        padding: 1rem;
+        padding-bottom: 9rem;
+        min-height: 100vh;
+        
+        background: linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--fav-color) 24%, transparent),
+            transparent 60%
+        );
     }
-    img {
-        width: 30vw;
-        height: 30vw;
-        max-width: 8rem;
-        max-height: 8rem;
-        object-fit: cover;
-        border-radius: var(--border-radius-circle);
-        border: 1px solid var(--text);
-    }
-</style>
+</style>    

@@ -12,6 +12,6 @@
     a {
         display: flex;
         align-items: center;
-        gap: var(--gap-small);
+        gap: var(--spacing-xs);
     }
 </style>

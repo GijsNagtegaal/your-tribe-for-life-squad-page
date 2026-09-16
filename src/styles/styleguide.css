@@ -30,7 +30,6 @@ html{
     color-scheme: light dark;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
@@ -39,6 +38,7 @@ html{
 }
 
 body {
+    
     /* Kleuren deze NIET gebruiken alleen voor variabelen ===========*/
     /* Brand */
     --palette-brand-700:       #1DB954;
@@ -82,6 +82,8 @@ body {
     --text: light-dark(var(--color-neutral-darkest), var(--color-neutral-lightest));
     --text-inverted: light-dark(var(--color-neutral-lightest),var(--color-neutral-darkest) );
     --background: light-dark(var(--color-neutral-lightest),var(--color-neutral-darkest) );
+
+    --transparent: #00000091;
 
     /* Padding / Spacing ============================================*/
     --spacing-xs:              0.25rem;    
@@ -142,6 +144,7 @@ h4 { font-size:                var(--font-size-h4);}
 h5 { font-size:                var(--font-size-h5);}
 
 h1, h2, h3, h4, h5, h6 {
+    margin: 0;
     font-family: var(--font-primary);
     color: var(--text);
     font-weight: var(--font-weight-bold);
@@ -149,6 +152,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
+    margin: 0;
     font-size: var(--font-size-body-md);
     line-height: 1.6;
 }
