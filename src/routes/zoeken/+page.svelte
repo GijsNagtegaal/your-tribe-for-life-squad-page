@@ -6,5 +6,3 @@
 
 <h2>Vind je klasgenoten en docenten.</h2>
 <SearchBar persons={data.persons} />
-
-<!--hier komt Recente zoekresultaten van thomas-->
