@@ -1,7 +1,6 @@
 <script>
     //https://svelte.dev/docs/svelte/transition
     import { fade } from 'svelte/transition';
-    import { flip } from 'svelte/animate'
     import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
     import PersonSquare from './PersonSquare.svelte';
     
@@ -37,7 +36,7 @@
         <h3>Resultaten voor "{searchTerm}"</h3>
             <ul>
                 {#each results as person (person.id)}
-                    <li animate:flip>
+                    <li>
                         <a href={getProfilePath(person)}>
                             <span class="image-wrapper">
                                 <PersonSquare {person}/>
