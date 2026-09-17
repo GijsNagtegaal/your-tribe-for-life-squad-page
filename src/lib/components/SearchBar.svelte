@@ -1,7 +1,6 @@
 <script>
     //https://svelte.dev/docs/svelte/transition
     import { fade } from 'svelte/transition';
-    import { flip } from 'svelte/animate'
     import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
     import PersonSquare from './PersonSquare.svelte';
     
@@ -26,6 +25,7 @@
     <form>
         <label>
             <SearchIcon size="2rem" />
+            <span class="sr-only">Zoek een persoon</span>
             <input type="text" bind:value={searchTerm} placeholder="Wie wil je opzoeken?">
         </label>
     </form>
@@ -34,10 +34,10 @@
 {#if searchTerm}
     <section class="searchResults" transition:fade>
         {#if results.length > 0}
-        <h3>Resultaten voor "{searchTerm}"</h3>
+            <h3>Resultaten voor "{searchTerm}"</h3>
             <ul>
                 {#each results as person (person.id)}
-                    <li animate:flip>
+                    <li>
                         <a href={getProfilePath(person)}>
                             <span class="image-wrapper">
                                 <PersonSquare {person}/>
@@ -48,17 +48,18 @@
                 {/each}
             </ul>
             {:else}
-            <p>Geen zoekresultaten gevonden voor "{searchTerm}"</p>
+            <h4>Geen zoekresultaten gevonden voor "{searchTerm}"</h4>
+            <p>Controleer de spelling of probeer een andere naam.</p>
         {/if}
     </section>
     {:else}
-    <p>Typ een naam om te zoeken</p>
 {/if}
 
 <style>
     form{
         display: flex;
         flex-direction: column;
+        margin-left: -0.5rem;
 
         label{
             display: flex;
@@ -68,6 +69,18 @@
             border: 0.15rem solid var(--color-neutral-darker);
             border-radius: var(--border-radius-3xl);
             background-color: var(--color-neutral-darker);
+
+            .sr-only{
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
 
             &:hover, &:focus-within{
                 border-color: var(--color-neutral-lighter);
@@ -90,13 +103,14 @@
 
     .searchResults{
         background-color: var(--color-neutral-darker);
-        padding: var(--spacing-md) var(--spacing-xl);
+        padding: var(--spacing-md) var(--spacing-md);
         border-radius: var(--border-radius-xl);
         margin-top: var(--spacing-xs);
         
         h3{
             margin-top: var(--spacing-md);
             color: var(--color-neutral-lightest);
+            padding-left: var(--spacing-md);
         }
         ul{
             padding: 0;
