@@ -12,5 +12,7 @@
 
 
 <style>
-
+    main{
+        margin: var(--spacing-xl);
+    }
 </style>
