@@ -30,6 +30,7 @@
         position: fixed;
         bottom: 0;
         left: 0;
+        padding-block: 0.5rem;
 
         a {
             display: flex;
