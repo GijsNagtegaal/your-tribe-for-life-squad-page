@@ -59,6 +59,7 @@
     form{
         display: flex;
         flex-direction: column;
+        margin-left: -0.5rem;
 
         label{
             display: flex;
