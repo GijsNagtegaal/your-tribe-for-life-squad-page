@@ -1,8 +1,16 @@
 <script>
     import SearchBar from "$lib/components/SearchBar.svelte";
+    import Heading from "$lib/components/Heading.svelte";
 
     let { data } = $props();
 </script>
 
-<h2>Vind je klasgenoten en docenten.</h2>
-<SearchBar persons={data.persons} />
+<main>
+    <Heading level={2} text="Vind je klasgenoten en docenten." />
+    <SearchBar persons={data.persons} />
+</main>
+
+
+<style>
+
+</style>
