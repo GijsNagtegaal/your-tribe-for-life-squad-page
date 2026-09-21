@@ -1,5 +1,8 @@
 # Afspraken over samenwerking
 
+<img width="1237" height="862" alt="image" src="https://github.com/user-attachments/assets/eda01912-8f3f-4c94-94f9-6fbeade13123" />
+https://www.figma.com/design/d46fmgYyvRwdQw5Inyzely/Squad-page-Thomas-Roxy-en-Gijs?node-id=0-1&t=7TnhLIghOGf4qpGQ-1
+
 ## Issues
 
 Issues worden ingericht via het Issue Template.
