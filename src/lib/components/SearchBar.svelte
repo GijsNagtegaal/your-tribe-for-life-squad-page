@@ -127,9 +127,20 @@
         a{
             display: flex;
             gap: var(--spacing-md);
+            
             .image-wrapper{
-                width: 12rem;
+                width: 6rem;
+
+
+                            p {
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
+            }
+
+
         }
+        
     }
 </style>
